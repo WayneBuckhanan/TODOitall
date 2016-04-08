@@ -8,7 +8,33 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('MainCtrl', function($scope, pDB) {
+  .controller('MainCtrl', function($scope, pDB, pouchDB) {
+    var remoteDB = pouchDB('http://localhost:5984/todos');
+
+    pDB.sync(remoteDB, {
+      live: true,
+      retry: true
+    }).on('change', function(info) {
+      console.log(info);
+      pDB.allDocs({
+         include_docs: true
+       }, function(err, response) {
+         $scope.$apply(function() {
+           $scope.todos = [];
+           response.rows.forEach(function(row) {
+             $scope.todos.push(row.doc);
+           });
+         });
+       });
+    }).on('paused', function(info) {
+      console.log(info);
+    }).on('active', function(info) {
+      console.log(info);
+    }).on('complete', function(info) {
+      console.log(info);
+    }).on('error', function(err) {
+      console.log(err);
+    });
 
     $scope.todos = [];
 
@@ -29,15 +55,7 @@ angular.module('softwareEngineeringTeamApp')
       });
     };
 
-    pDB.allDocs({
-      include_docs: true
-    }, function(err, response) {
-      $scope.$apply(function() {
-        response.rows.forEach(function(row) {
-          $scope.todos.push(row.doc);
-        });
-      });
-    });
+
 
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
