@@ -9,6 +9,6 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .factory('pDB', function(pouchDB) {
-    var localdb = pouchDB("db")
+    var localdb = new pouchDB("db")
     return localdb
   });
