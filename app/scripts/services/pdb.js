@@ -8,7 +8,7 @@
  * Factory in the softwareEngineeringTeamApp.
  */
 angular.module('softwareEngineeringTeamApp')
-  .factory('pDB', function(pouchDB) {
-    var localdb = new pouchDB("db")
+  .factory('pDB', function() {
+    var localdb = new PouchDB("db")
     return localdb
   });
