@@ -9,7 +9,7 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('MainCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('pouchdbtodo.herokuapps.com/todos');
+    var remoteDB = pouchDB('pouchdbtodo.herokuapp.com/todos');
     $scope.todos = [];
 
     pDB.sync(remoteDB, {
