@@ -44,12 +44,13 @@ class TodosListCtrl {
       }
     });
   }
-  addTask(newTask) {
+  addTask(newTask, priority) {
     // Insert a task into the collection
-    Meteor.call('tasks.insert', newTask);
+    Meteor.call('tasks.insert', newTask, priority);
 
     // Clear form
     this.newTask = '';
+    this.priority = '';
   }
 
   setChecked(task) {
