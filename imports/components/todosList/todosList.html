@@ -10,10 +10,8 @@
   <form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask, $ctrl.taskPriority)" ng-show="$ctrl.currentUser">
     <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="Type to add new tasks" />
     <select  ng-model="$ctrl.taskPriority">
-     <option value="">---Please select---</option>
-     <option value="High">High</option>
-     <option value="Medium">Medium</option>
-     <option value="Low">Low</option>
+      <option value=''>What is the priority</option>
+    <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.value}}">{{option.name}}</option>
    </select>
     <button type="submit">submit</button>
   </form>
@@ -36,8 +34,6 @@
   </li>
 </ul>
 <select  ng-model="$ctrl.priority">
- <option value=""></option>
- <option value="High">High</option>
- <option value="Medium">Medium</option>
- <option value="Low">Low</option>
+  <option value=''></option>
+ <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.value}}">{{option.name}}</option>
 </select>
