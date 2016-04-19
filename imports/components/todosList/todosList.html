@@ -1,39 +1,38 @@
 <header>
-  <h1>Todo List ( {{$ctrl.incompleteCount}} )</h1>
+    <h1>Todo List ( {{$ctrl.incompleteCount}} )</h1>
 
-  <label class="hide-completed">
-    <input type="checkbox" ng-model="$ctrl.hideCompleted" /> Hide Completed Tasks
-  </label>
+    <label class="hide-completed">
+        <input type="checkbox" ng-model="$ctrl.hideCompleted" /> Hide Completed Tasks
+    </label>
 
-  <login-buttons></login-buttons>
+    <login-buttons></login-buttons>
 
-  <form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask, $ctrl.taskPriority)" ng-show="$ctrl.currentUser">
-    <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="Type to add new tasks" />
-    <select  ng-model="$ctrl.taskPriority">
-      <option value=''>What is the priority</option>
-    <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.value}}">{{option.name}}</option>
-   </select>
-    <button type="submit">submit</button>
-  </form>
+    <form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask, $ctrl.taskPriority)" ng-show="$ctrl.currentUser">
+        <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="Type to add new tasks" />
+        <select ng-model="$ctrl.taskPriority">
+            <option value=''>What is the priority</option>
+            <option ng-repeat="option in $ctrl.priorityOptions">{{option.priority}}</option>
+        </select>
+    </form>
 
 </header>
 
 <ul>
-  <li ng-repeat="task in $ctrl.tasks | filter:{priority:$ctrl.priority}" ng-class="{'checked': task.checked, 'private': task.private}">
-    <button class="delete" ng-click="$ctrl.removeTask(task)">&times;</button>
+    <li ng-repeat="task in $ctrl.tasks | filter:{priority:$ctrl.priority}" ng-class="{'checked': task.checked, 'private': task.private}">
+        <button class="delete" ng-click="$ctrl.removeTask(task)">&times;</button>
 
-    <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)" class="toggle-checked" />
+        <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)" class="toggle-checked" />
 
-    <span class="text">
-        <strong>{{task.username}}</strong> - {{task.text}} - {{task.priority}}
-    </span>
+        <span class="text">
+        <strong>{{task.username}}</strong> - {{task.text}}: {{task.priority}}
+        </span>
 
-    <button class="toggle-private" ng-click="$ctrl.setPrivate(task)" ng-show="task.owner === $ctrl.currentUser._id">
-      {{task.private == true ? "Private" : "Public"}}
-    </button>
-  </li>
+        <button class="toggle-private" ng-click="$ctrl.setPrivate(task)" ng-show="task.owner === $ctrl.currentUser._id">
+            {{task.private == true ? "Private" : "Public"}}
+        </button>
+    </li>
 </ul>
-<select  ng-model="$ctrl.priority">
-  <option value=''></option>
- <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.value}}">{{option.name}}</option>
+<select ng-model="$ctrl.priority">
+    <option value=''></option>
+    <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.priority}}">{{option.priority}}</option>
 </select>

@@ -13,9 +13,11 @@ class TodosListCtrl {
     $scope.viewModel(this);
     this.subscribe('tasks');
     this.priorityOptions = [
-                           {value:'High', name:'High'},
-                           {value:'Medium', name:'Medium'},
-                           {value:'Low', name:'Low'}];
+                           {priority:'High'},
+                           {priority:'Medium'},
+                           {priority:'Low'}];
+    this.taskPriority = '';
+    this.priority = '';
     this.hideCompleted = false;
 
     this.helpers({
