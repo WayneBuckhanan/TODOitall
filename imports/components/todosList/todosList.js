@@ -42,7 +42,16 @@ class TodosListCtrl {
         return Tasks.find({
           checked: {
             $ne: true
-          }
+          },
+          $or: [
+          {
+            private: {
+              $ne: true
+            }
+          },
+          {
+            owner: Meteor.userId()}
+          ]
         }).count();
       },
       currentUser() {
