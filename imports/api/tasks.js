@@ -40,6 +40,8 @@ Meteor.methods({
       createdAt: new Date(),
       owner: Meteor.userId(),
       username: Meteor.user().username,
+      checked: false,
+      private: true,
       priority,
     });
   },
