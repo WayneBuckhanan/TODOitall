@@ -1,5 +1,4 @@
-
-_As a_ , _I want_ _so that_
+# User Stories
 
 _As a_ business user, _I want_ to capture ideas/tasks/etc on the go _so that_ I can remember to deal with them all later
 
@@ -36,5 +35,25 @@ _As a_ user, _I want_ to be able to tell what tasks are high leverage _so that_ 
 
 _As a_ business user, _I want_ to be able to recognize mission critical tasks _so that_ I can focus on the tasks that are important for reaching my goals
 	_so that_ I can reach my goals more quickly and easily (at all!)
+
+_As a_ project manager, _I want_ to be able to track what tasks depend on other tasks _so that_ I can prioritize and plan (and maybe draw Gantt-style charts)
+
+_As a_ , _I want_ _so that_
+
+---
+
+# Filters
+
+- Mission critical, mission incidental, mission optional
+	- identify which "mission" / project
+	- frame importance in terms of the mission / why?
+- Income/resource/MITEAM generating, conserving, consuming
+	- expected returns (for ROI calculations)
+- Effort vs Value (0-8)
+- Ability vs Challenge (0-12)
+
+- generate recommended action for each task after filter is applied
+	- actions: dump, delegate, schedule, apply additional filter/s
+	- chain filters, apply sequentially, default order
 
 ###
