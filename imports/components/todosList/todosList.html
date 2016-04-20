@@ -10,6 +10,8 @@
     <form class="new-task" ng-submit="$ctrl.addTask($ctrl.newTask, $ctrl.taskPriority)" ng-show="$ctrl.currentUser">
         <input ng-model="$ctrl.newTask" type="text" name="text" placeholder="Type to add new tasks" />
         <select ng-model="$ctrl.taskPriority">
+          <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
+          <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
             <option value=''>What is the priority</option>
             <option ng-repeat="option in $ctrl.priorityOptions">{{option.priority}}</option>
         </select>
@@ -19,6 +21,9 @@
 
 <ul>
     <li ng-repeat="task in $ctrl.tasks | filter:{priority:$ctrl.priority}" ng-class="{'checked': task.checked, 'private': task.private}">
+      <!--This is where the main filter is. I used angulars filter in the ng repeat which takes an expression and  -->
+      <!--and filters the through the objects for which that expression is true. In this case i am passing in an object with a priority attribute  -->
+      <!--angular will filter all objects in the arry that have this attribute  -->
         <button class="delete" ng-click="$ctrl.removeTask(task)">&times;</button>
 
         <input type="checkbox" ng-checked="task.checked" ng-click="$ctrl.setChecked(task)" class="toggle-checked" />
@@ -32,19 +37,10 @@
         </button>
     </li>
 </ul>
+
 <select ng-model="$ctrl.priority">
+  <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
+  <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
     <option value=''></option>
     <option ng-repeat="option in $ctrl.priorityOptions" value="{{option.priority}}">{{option.priority}}</option>
 </select>
-<!--test stuff  -->
-<a href="#" class="button">Default Button</a>
-<ul id="Amenu" class="vertical menu" data-accordion-menu>
-  <li>
-    <a href="#">Item 1</a>
-    <ul class="accordian" data-accordian>
-      <li><a href="#">Item 1A</a></li>
-      <li><a href="#">Item 1B</a></li>
-    </ul>
-  </li>
-  <li><a href="#">Item 2</a></li>
-</ul>

@@ -15,6 +15,8 @@ if (Meteor.isServer) {
   // Only publish tasks that are public or belong to the current user
   Meteor.publish('tasks', function tasksPublication() {
     return Tasks.find({
+      //Changed the original to include only public todos and
+      //todos owned by the user
       $or: [{
         private: {
           $ne: true
@@ -36,6 +38,8 @@ Meteor.methods({
     }
 
     Tasks.insert({
+      //Added explicit attributes for checked, priority, and private.
+      //This aids in filtering allowing all data to be filtered by these attributes
       text,
       createdAt: new Date(),
       owner: Meteor.userId(),

@@ -17,6 +17,7 @@ class TodosListCtrl {
                            {priority:'Medium'},
                            {priority:'Low'}];
     this.taskPriority = '';
+    //Prioty used for filtering :TODO need to change the name
     this.priority = '';
     this.hideCompleted = false;
 
