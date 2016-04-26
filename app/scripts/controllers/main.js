@@ -9,33 +9,33 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('MainCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('pouchdbtodo.herokuapp.com/todos');
+    // var remoteDB = pouchDB('pouchdbtodo.herokuapp.com/todos');
     $scope.todos = [];
 
-    pDB.sync(remoteDB, {
-      live: true,
-      retry: true
-    }).on('change', function(info) {
-      console.log(info);
-      pDB.allDocs({
-        include_docs: true
-      }, function(err, response) {
-        $scope.$apply(function() {
-          $scope.todos = [];
-          response.rows.forEach(function(row) {
-            $scope.todos.push(row.doc);
-          });
-        });
-      });
-    }).on('paused', function(info) {
-      console.log(info);
-    }).on('active', function(info) {
-      console.log(info);
-    }).on('complete', function(info) {
-      console.log(info);
-    }).on('error', function(err) {
-      console.log(err);
-    });
+    // pDB.sync(remoteDB, {
+    //   live: true,
+    //   retry: true
+    // }).on('change', function(info) {
+    //   console.log(info);
+    //   pDB.allDocs({
+    //     include_docs: true
+    //   }, function(err, response) {
+    //     $scope.$apply(function() {
+    //       $scope.todos = [];
+    //       response.rows.forEach(function(row) {
+    //         $scope.todos.push(row.doc);
+    //       });
+    //     });
+    //   });
+    // }).on('paused', function(info) {
+    //   console.log(info);
+    // }).on('active', function(info) {
+    //   console.log(info);
+    // }).on('complete', function(info) {
+    //   console.log(info);
+    // }).on('error', function(err) {
+    //   console.log(err);
+    // });
 
 
     pDB.allDocs({
@@ -48,6 +48,14 @@ angular.module('softwareEngineeringTeamApp')
         });
       });
     });
+
+    $scope.priorityOptions = [
+                           {priority:'High'},
+                           {priority:'Medium'},
+                           {priority:'Low'}];
+    $scope.taskPriority = '';
+    //Prioty used for filtering :TODO need to change the name
+    $scope.priority = '';
 
     $scope.addTodo = function() {
       var newTodo = {
