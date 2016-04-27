@@ -50,18 +50,19 @@ angular.module('softwareEngineeringTeamApp')
     });
 
     $scope.priorityOptions = [
-                           {priority:'High'},
-                           {priority:'Medium'},
-                           {priority:'Low'}];
-    $scope.taskPriority = '';
+                           {value:'High'},
+                           {value:'Medium'},
+                           {value:'Low'}];
+    $scope.todoPriority = '';
     //Prioty used for filtering :TODO need to change the name
-    $scope.priority = '';
+    $scope.filterPriority = '';
 
     $scope.addTodo = function() {
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
-        done: false
+        done: false,
+        priority: $scope.todoPriority
       };
       $scope.todos.push(newTodo);
       $scope.todoText = '';
@@ -73,8 +74,6 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._rev = res.rev;
       });
     };
-
-
 
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
