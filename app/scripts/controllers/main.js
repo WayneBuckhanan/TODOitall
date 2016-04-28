@@ -9,7 +9,7 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('MainCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('http://localhost:5984/todo');
+    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
     $scope.todos = [];
 
     pDB.sync(remoteDB, {
