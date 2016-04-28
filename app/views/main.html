@@ -1,0 +1,28 @@
+<h1>Todo Pouch</h1>
+<span>{{remaining()}} of {{todos.length}} remaining</span>
+<button class="button" ng-click="removeDone()">Remove done</button>
+
+<ul>
+  <li ng-repeat="todo in todos  | filter:{priority:filterPriority}">
+    <input type="checkbox" ng-model="todo.done" ng-click="updateTodo(todo)">
+    <span ng-class="{done: todo.done}">{{todo.text}}: {{todo.priority}}</span>
+  </li>
+</ul>
+
+<form ng-submit="addTodo()">
+  <input type="text" ng-model="todoText" size="30" placeholder="add new todo here">
+  <select ng-model="todoPriority">
+    <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
+    <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
+    <option value=''>What is the priority</option>
+    <option ng-repeat="option in priorityOptions">{{option.value}}</option>
+  </select>
+  <input class="button" type="submit" value="add">
+</form>
+
+<select ng-model="filterPriority">
+  <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
+  <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
+  <option value=''>All</option>
+  <option ng-repeat="option in priorityOptions" value="{{option.value}}">{{option.value}}</option>
+</select>
