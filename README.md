@@ -56,4 +56,4 @@ Finally to download the app we will clone the repository from git with this comm
 then cd into the app directory and run `sudo npm install && bower install`
 
 ## Operation
-To run a live preview of the app simply run `grunt`
+To run a live preview of the app simply run `grunt serve`
