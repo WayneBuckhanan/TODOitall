@@ -97,6 +97,8 @@ angular.module('softwareEngineeringTeamApp')
     };
 
     $scope.updateTodo = function(todo) {
+      
+      todo.done ? todo.done = false : todo.done = true;
       pDB.put(todo);
     };
 

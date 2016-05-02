@@ -9,7 +9,7 @@
   <input type="text" ng-model="todoText" size="30" placeholder="add new todo here">
   </md-input-container>
 <md-input-container>
-  <md-select ng-model="todoPriority">
+  <md-select aria-label="Priority" ng-model="todoPriority">
     <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
     <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
     <md-option value="" selected disabled>Please select a priority...</md-option>
@@ -23,7 +23,7 @@
 </form>
 </md-content>
 <md-input-container>
-<md-select ng-model="filterPriority">
+<md-select aria-label="Filter" ng-model="filterPriority">
   <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
   <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
   <md-option value=''>All</md-option>
@@ -33,7 +33,7 @@
 
 <md-card ng-repeat="todo in todos  | filter:{priority:filterPriority}">
         <md-card-title>
-          <md-checkbox class="md-headline" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
+          <md-checkbox class="md-headline" aria-label="Checkbox 1" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
         </md-card-title>
         <md-card-content ng-show="open">
         <p>Priority: {{todo.priority}}</p>
