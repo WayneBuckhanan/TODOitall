@@ -49,6 +49,7 @@ angular.module('softwareEngineeringTeamApp')
       });
     });
 
+
     $scope.priorityOptions = [
                            {value:'High'},
                            {value:'Medium'},
@@ -58,7 +59,7 @@ angular.module('softwareEngineeringTeamApp')
     $scope.filterPriority = '';
 
     $scope.addTodo = function() {
-    
+
     	if($scope.todoPriority == ''){
         	$scope.todoPriority = 'Low'
         }
@@ -79,11 +80,11 @@ angular.module('softwareEngineeringTeamApp')
       });
       $scope.todoPriority = ''
     };
-    
+
     $scope.remove = function(todo){
    		 pDB.remove(todo);
     };
-    
+
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
       $scope.todos = [];
@@ -97,7 +98,7 @@ angular.module('softwareEngineeringTeamApp')
     };
 
     $scope.updateTodo = function(todo) {
-      
+
       todo.done ? todo.done = false : todo.done = true;
       pDB.put(todo);
     };
