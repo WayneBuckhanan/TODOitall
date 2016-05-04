@@ -35,7 +35,7 @@
 				</md-input-container>
 
 			<md-input-container>
-				<md-button type="submit">Add Task</md-button>
+				<md-button type="submit" ng-click="showAdv = false" >Add Task</md-button>
 			</md-input-container>
 		</div>
 	</form>
@@ -59,6 +59,9 @@
 	<md-card-content ng-show="open">
 		<p>Priority: {{todo.priority}}</p>
 		<p>Done: {{todo.done}}</p>
+		<p>Percieved Challenge: {{todo.pChallenge}}</p>
+		<p>Percieved Ability: {{todo.pAbility}}</p>
+		<p>Task State: {{todo.taskState}}</p>
 	</md-card-content>
 	<md-card-actions layout="row" layout-align="end center">
 		<md-button ng-click="open = !open">Details</md-button>

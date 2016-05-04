@@ -9,14 +9,37 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
-    $scope.todos = [];
 
-    pDB.sync(remoteDB, {
-      live: true,
-      retry: true
-    }).on('change', function(info) {
-      console.log(info);
+      $scope.todos = [];
+
+      //Syncing for local and remote databases
+      var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+      pDB.sync(remoteDB, {
+        live: true,
+        retry: true
+      }).on('change', function(info) {
+        console.log(info);
+        pDB.allDocs({
+          include_docs: true
+        }, function(err, response) {
+          $scope.$apply(function() {
+            $scope.todos = [];
+            response.rows.forEach(function(row) {
+              $scope.todos.push(row.doc);
+            });
+          });
+        });
+      }).on('paused', function(info) {
+        console.log(info);
+      }).on('active', function(info) {
+        console.log(info);
+      }).on('complete', function(info) {
+        console.log(info);
+      }).on('error', function(err) {
+        console.log(err);
+      });
+
+
       pDB.allDocs({
         include_docs: true
       }, function(err, response) {
@@ -27,47 +50,58 @@ angular.module('softwareEngineeringTeamApp')
           });
         });
       });
-    }).on('paused', function(info) {
-      console.log(info);
-    }).on('active', function(info) {
-      console.log(info);
-    }).on('complete', function(info) {
-      console.log(info);
-    }).on('error', function(err) {
-      console.log(err);
-    });
 
+      //Variables for passing attributes to html
+      $scope.priorityOptions = [{
+        value: 'High'
+      }, {
+        value: 'Medium'
+      }, {
+        value: 'Low'
+      }];
+      $scope.todoPriority = '';
+      //Prioty used for filtering :TODO need to change the name
+      $scope.filterPriority = '';
+      $scope.percievedAbility = '';
+      $scope.percievedChallenge = '';
 
-    pDB.allDocs({
-      include_docs: true
-    }, function(err, response) {
-      $scope.$apply(function() {
-        $scope.todos = [];
-        response.rows.forEach(function(row) {
-          $scope.todos.push(row.doc);
-        });
-      });
-    });
+      //Helper funcitons
 
+      $scope.taskStateCalc = function(pAbility, pChallenge) {
+        var state = pChallenge / pAbility;
 
-    $scope.priorityOptions = [
-                           {value:'High'},
-                           {value:'Medium'},
-                           {value:'Low'}];
-    $scope.todoPriority = '';
-    //Prioty used for filtering :TODO need to change the name
-    $scope.filterPriority = '';
+        if (state <= 4 / 12) {
+          state = "Apathy";
+        } else if (4 / 12 < state && state <= 8 / 12) {
+          state = "Power-Apathy";
+        } else if (8 / 12 < state && state <= 12 / 8) {
+          state = "Power";
+        } else if (12 / 8 < state && state <= 12 / 4) {
+          state = "Power-Stress";
+        } else if (12 / 4 < state) {
+          state = "Stress";
+        } else {
+          state = "";
+        }
+        return state;
 
+    };
+
+    //Main Functions
     $scope.addTodo = function() {
 
-    	if($scope.todoPriority == ''){
-        	$scope.todoPriority = 'Low'
-        }
+      if ($scope.todoPriority === '') {
+        $scope.todoPriority = 'Low';
+      }
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
         done: false,
-        priority: $scope.todoPriority
+        priority: $scope.todoPriority,
+        pAbility: $scope.percievedAbility,
+        pChallenge: $scope.percievedChallenge,
+        taskState: $scope.taskStateCalc($scope.percievedAbility, $scope.percievedChallenge)
+
       };
       $scope.todos.push(newTodo);
       $scope.todoText = '';
@@ -78,11 +112,13 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._id = res.id;
         newTodo._rev = res.rev;
       });
-      $scope.todoPriority = ''
+      $scope.todoPriority = '';
+      $scope.percievedAbility = '';
+      $scope.percievedChallenge = '';
     };
 
-    $scope.remove = function(todo){
-   		 pDB.remove(todo);
+    $scope.remove = function(todo) {
+      pDB.remove(todo);
     };
 
     $scope.removeDone = function() {
