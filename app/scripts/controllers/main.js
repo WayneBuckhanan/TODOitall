@@ -8,6 +8,6 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('MainCtrl', function($scope, pDB, pouchDB) {
+  .controller('MainCtrl', function() {
 
   });

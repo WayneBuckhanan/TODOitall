@@ -58,9 +58,9 @@ angular.module('softwareEngineeringTeamApp')
     $scope.filterPriority = '';
 
     $scope.addTodo = function() {
-    
-    	if($scope.todoPriority == ''){
-        	$scope.todoPriority = 'Low'
+
+    	if($scope.todoPriority === ''){
+        	$scope.todoPriority = 'Low';
         }
       var newTodo = {
         _id: Math.uuid,
@@ -77,13 +77,13 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._id = res.id;
         newTodo._rev = res.rev;
       });
-      $scope.todoPriority = ''
+      $scope.todoPriority = '';
     };
-    
+
     $scope.remove = function(todo){
    		 pDB.remove(todo);
     };
-    
+
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
       $scope.todos = [];
@@ -97,7 +97,7 @@ angular.module('softwareEngineeringTeamApp')
     };
 
     $scope.updateTodo = function(todo) {
-      
+
       todo.done ? todo.done = false : todo.done = true;
       pDB.put(todo);
     };
