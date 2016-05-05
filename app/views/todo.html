@@ -30,12 +30,12 @@
 				</md-input-container>
 			</div>
 
-				<md-input-container>
-					<md-button ng-click="showAdv = !showAdv">Advanced</md-button>
-				</md-input-container>
+			<md-input-container>
+				<md-button ng-click="showAdv = !showAdv">Advanced</md-button>
+			</md-input-container>
 
 			<md-input-container>
-				<md-button type="submit" ng-click="showAdv = false" >Add Task</md-button>
+				<md-button type="submit" ng-click="showAdv = false">Add Task</md-button>
 			</md-input-container>
 		</div>
 	</form>
@@ -51,7 +51,14 @@
 	</md-select>
 </md-input-container>
 
-<md-card ng-repeat="todo in todos  | filter:{priority:filterPriority}">
+<md-input-container>
+	<md-select ng-model="filterTaskState">
+		<md-option value=''>All</md-option>
+		<md-option ng-repeat="states in taskStates" value="{{states.value}}">{{states.value}}</md-option>
+	</md-select>
+</md-input-container>
+
+<md-card ng-repeat="todo in todos  | filter:({priority:filterPriority} && {taskState:filterTaskState})">
 	<!--Displays a todo as a card-->
 	<md-card-title>
 		<md-checkbox class="md-headline" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>

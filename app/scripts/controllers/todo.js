@@ -10,36 +10,15 @@
 angular.module('softwareEngineeringTeamApp')
   .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
 
-      $scope.todos = [];
+    $scope.todos = [];
 
-      //Syncing for local and remote databases
-      var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
-      pDB.sync(remoteDB, {
-        live: true,
-        retry: true
-      }).on('change', function(info) {
-        console.log(info);
-        pDB.allDocs({
-          include_docs: true
-        }, function(err, response) {
-          $scope.$apply(function() {
-            $scope.todos = [];
-            response.rows.forEach(function(row) {
-              $scope.todos.push(row.doc);
-            });
-          });
-        });
-      }).on('paused', function(info) {
-        console.log(info);
-      }).on('active', function(info) {
-        console.log(info);
-      }).on('complete', function(info) {
-        console.log(info);
-      }).on('error', function(err) {
-        console.log(err);
-      });
-
-
+    //Syncing for local and remote databases
+    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+    pDB.sync(remoteDB, {
+      live: true,
+      retry: true
+    }).on('change', function(info) {
+      console.log(info);
       pDB.allDocs({
         include_docs: true
       }, function(err, response) {
@@ -50,40 +29,74 @@ angular.module('softwareEngineeringTeamApp')
           });
         });
       });
+    }).on('paused', function(info) {
+      console.log(info);
+    }).on('active', function(info) {
+      console.log(info);
+    }).on('complete', function(info) {
+      console.log(info);
+    }).on('error', function(err) {
+      console.log(err);
+    });
 
-      //Variables for passing attributes to html
-      $scope.priorityOptions = [{
-        value: 'High'
-      }, {
-        value: 'Medium'
-      }, {
-        value: 'Low'
-      }];
-      $scope.todoPriority = '';
-      //Prioty used for filtering :TODO need to change the name
-      $scope.filterPriority = '';
-      $scope.percievedAbility = '';
-      $scope.percievedChallenge = '';
 
-      //Helper funcitons
+    pDB.allDocs({
+      include_docs: true
+    }, function(err, response) {
+      $scope.$apply(function() {
+        $scope.todos = [];
+        response.rows.forEach(function(row) {
+          $scope.todos.push(row.doc);
+        });
+      });
+    });
 
-      $scope.taskStateCalc = function(pAbility, pChallenge) {
-        var state = pChallenge / pAbility;
+    //Variables for passing attributes to html
+    $scope.priorityOptions = [{
+      value: 'High'
+    }, {
+      value: 'Medium'
+    }, {
+      value: 'Low'
+    }];
 
-        if (state <= 4 / 12) {
-          state = "Apathy";
-        } else if (4 / 12 < state && state <= 8 / 12) {
-          state = "Power-Apathy";
-        } else if (8 / 12 < state && state <= 12 / 8) {
-          state = "Power";
-        } else if (12 / 8 < state && state <= 12 / 4) {
-          state = "Power-Stress";
-        } else if (12 / 4 < state) {
-          state = "Stress";
-        } else {
-          state = "";
-        }
-        return state;
+    $scope.taskStates = [{
+      value: "Apathy"
+    }, {
+      value: "Power-Apathy"
+    }, {
+      value: "Power"
+    }, {
+      value: "Power-Stress"
+    }, {
+      value: "Stress"
+    }];
+
+    $scope.todoPriority = '';
+    //Prioty used for filtering :TODO need to change the name
+    $scope.filterPriority = '';
+    $scope.percievedAbility = '';
+    $scope.percievedChallenge = '';
+
+    //Helper funcitons
+
+    $scope.taskStateCalc = function(pAbility, pChallenge) {
+      var state = pChallenge / pAbility;
+
+      if (state <= 4 / 12) {
+        state = "Apathy";
+      } else if (4 / 12 < state && state <= 8 / 12) {
+        state = "Power-Apathy";
+      } else if (8 / 12 < state && state <= 12 / 8) {
+        state = "Power";
+      } else if (12 / 8 < state && state <= 12 / 4) {
+        state = "Power-Stress";
+      } else if (12 / 4 < state) {
+        state = "Stress";
+      } else {
+        state = "";
+      }
+      return state;
 
     };
 
