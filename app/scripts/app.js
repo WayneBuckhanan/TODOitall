@@ -11,10 +11,7 @@
 angular
   .module('softwareEngineeringTeamApp', [
     'ngAnimate',
-    'ngCookies',
-    'ngResource',
     'ngRoute',
-    'ngSanitize',
     'pouchdb',
     'ngMaterial'
   ])
@@ -39,5 +36,3 @@ angular
     $mdSidenav('left').toggle();
   };
 });
-  
-  
