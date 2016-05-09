@@ -1,5 +1,6 @@
 'use strict';
 
+
 /**
  * @ngdoc function
  * @name softwareEngineeringTeamApp.controller:MainCtrl
@@ -8,15 +9,36 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
-    $scope.todos = [];
+    .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
+      var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+      $scope.todos = [];
 
-    pDB.sync(remoteDB, {
-      live: true,
-      retry: true
-    }).on('change', function(info) {
-      console.log(info);
+      pDB.sync(remoteDB, {
+        live: true,
+        retry: true
+      }).on('change', function(info) {
+        console.log(info);
+        pDB.allDocs({
+          include_docs: true
+        }, function(err, response) {
+          $scope.$apply(function() {
+            $scope.todos = [];
+            response.rows.forEach(function(row) {
+              $scope.todos.push(row.doc);
+            });
+          });
+        });
+      }).on('paused', function(info) {
+        console.log(info);
+      }).on('active', function(info) {
+        console.log(info);
+      }).on('complete', function(info) {
+        console.log(info);
+      }).on('error', function(err) {
+        console.log(err);
+      });
+
+
       pDB.allDocs({
         include_docs: true
       }, function(err, response) {
@@ -27,87 +49,66 @@ angular.module('softwareEngineeringTeamApp')
           });
         });
       });
-    }).on('paused', function(info) {
-      console.log(info);
-    }).on('active', function(info) {
-      console.log(info);
-    }).on('complete', function(info) {
-      console.log(info);
-    }).on('error', function(err) {
-      console.log(err);
-    });
 
-
-    pDB.allDocs({
-      include_docs: true
-    }, function(err, response) {
-      $scope.$apply(function() {
-        $scope.todos = [];
-        response.rows.forEach(function(row) {
-          $scope.todos.push(row.doc);
-        });
-      });
-    });
-
-    $scope.priorityOptions = [
-                           {value:'High'},
-                           {value:'Medium'},
-                           {value:'Low'}];
-    $scope.todoPriority = '';
-    //Prioty used for filtering :TODO need to change the name
-    $scope.filterPriority = '';
-
-    $scope.addTodo = function() {
-
-    	if($scope.todoPriority === ''){
-        	$scope.todoPriority = 'Low';
-        }
-      var newTodo = {
-        _id: Math.uuid,
-        text: $scope.todoText,
-        done: false,
-        priority: $scope.todoPriority
-      };
-      $scope.todos.push(newTodo);
-      $scope.todoText = '';
-      pDB.post(newTodo, function(err, res) {
-        if (err) {
-          console.log(err);
-        }
-        newTodo._id = res.id;
-        newTodo._rev = res.rev;
-      });
+      $scope.priorityOptions = [
+        {value: 'High'},
+        {value: 'Medium'},
+        {value: 'Low'}];
       $scope.todoPriority = '';
-    };
+      //Prioty used for filtering :TODO need to change the name
+      $scope.filterPriority = '';
 
-    $scope.remove = function(todo){
-   		 pDB.remove(todo);
-    };
+      $scope.addTodo = function() {
 
-    $scope.removeDone = function() {
-      var oldTodos = $scope.todos;
-      $scope.todos = [];
-      angular.forEach(oldTodos, function(todo) {
-        if (!todo.done) {
-          $scope.todos.push(todo);
-        } else {
-          pDB.remove(todo);
+        if ($scope.todoPriority === '') {
+          $scope.todoPriority = 'Low';
         }
-      });
-    };
+        var newTodo = {
+          _id: Math.uuid,
+          text: $scope.todoText,
+          done: false,
+          priority: $scope.todoPriority
+        };
+        $scope.todos.push(newTodo);
+        $scope.todoText = '';
+        pDB.post(newTodo, function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          newTodo._id = res.id;
+          newTodo._rev = res.rev;
+        });
+        $scope.todoPriority = '';
+      };
 
-    $scope.updateTodo = function(todo) {
+      $scope.remove = function(todo) {
+        pDB.remove(todo);
+      };
 
-      todo.done ? todo.done = false : todo.done = true;
-      pDB.put(todo);
-    };
+      $scope.removeDone = function() {
+        var oldTodos = $scope.todos;
+        $scope.todos = [];
+        angular.forEach(oldTodos, function(todo) {
+          if (!todo.done) {
+            $scope.todos.push(todo);
+          } else {
+            pDB.remove(todo);
+          }
+        });
+      };
 
-    $scope.remaining = function() {
-      var count = 0;
-      angular.forEach($scope.todos, function(todo) {
-        count += todo.done ? 0 : 1;
-      });
-      return count;
-    };
+      $scope.updateTodo = function(todo) {
 
-  });
+        todo.done ? todo.done = false : todo.done = true;
+        pDB.put(todo);
+      };
+
+      $scope.remaining = function() {
+        var count = 0;
+        angular.forEach($scope.todos, function(todo) {
+          count += todo.done ? 0 : 1;
+        });
+        return count;
+      };
+
+    });

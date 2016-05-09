@@ -9,7 +9,7 @@
  */
 
 angular.module('softwareEngineeringTeamApp')
-  .factory('pDB', function() {
-    var localdb = new PouchDB("db");
-    return localdb;
-  });
+    .factory('pDB', function() {
+      var localdb = new PouchDB('db');
+      return localdb;
+    });

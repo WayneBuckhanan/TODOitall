@@ -1,5 +1,6 @@
 'use strict';
 
+
 /**
  * @ngdoc directive
  * @name softwareEngineeringTeamApp.directive:menubar
@@ -7,9 +8,9 @@
  * # menubar
  */
 angular.module('softwareEngineeringTeamApp')
-  .directive('menubar', function () {
-    return {
-      templateUrl: 'views/menubar.html',
-      restrict: 'E',
-    };
-  });
+    .directive('menubar', function() {
+      return {
+        templateUrl: 'views/menubar.html',
+        restrict: 'E',
+      };
+    });

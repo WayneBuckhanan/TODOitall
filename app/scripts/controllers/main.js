@@ -1,5 +1,6 @@
 'use strict';
 
+
 /**
  * @ngdoc function
  * @name softwareEngineeringTeamApp.controller:MainCtrl
@@ -8,6 +9,6 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('MainCtrl', function() {
+    .controller('MainCtrl', function() {
 
-  });
+    });
