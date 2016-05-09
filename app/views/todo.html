@@ -41,6 +41,7 @@
 	</form>
 
 </md-content>
+
 <!--Filter box-->
 <md-input-container>
 	<md-select ng-model="filterPriority">
@@ -59,19 +60,44 @@
 </md-input-container>
 
 <md-card ng-repeat="todo in todos  | filter:({priority:filterPriority} && {taskState:filterTaskState})">
-	<!--Displays a todo as a card-->
-	<md-card-title>
-		<md-checkbox class="md-headline" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
-	</md-card-title>
-	<md-card-content ng-show="open">
-		<p>Priority: {{todo.priority}}</p>
-		<p>Done: {{todo.done}}</p>
-		<p>Percieved Challenge: {{todo.pChallenge}}</p>
-		<p>Percieved Ability: {{todo.pAbility}}</p>
-		<p>Task State: {{todo.taskState}}</p>
+  <md-card-title layout="row" layout-align="start start">
+    <md-checkbox class="md-headline" aria-label="Checkbox 1" ng-model="todo.done" ng-click="updateTodo(todo)"></md-checkbox>
+		<h2 ng-show="!edit" ng-click="open = !open">{{todo.text}}</h2>
+  </md-card-title>
+  <md-card-content ng-show="open" layout="column">
+		<!-- these properties are set up to show when edit is not selected -->
+    <p ng-show="!edit">Priority: {{todo.priority}}</p>
+		<p ng-show="!edit">Percieved Challenge: {{todo.pChallenge}}</p>
+		<p ng-show="!edit">Percieved Ability: {{todo.pAbility}}</p>
+		<p ng-show="!edit">Task State: {{todo.taskState}}</p>
+		
+		
+		<!-- These edit options are set up to only show up when edit has been selected. -->
+		<md-input-container ng-show="edit"> 
+			<input type="text" aria-label="name" ng-model="todo.text" size="30">
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<md-select aria-label="Priority" ng-model="todoPriority">
+				<!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
+				<!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
+				<md-option value="" selected disabled>Please select a priority...</md-option>
+				<md-option ng-repeat="option in priorityOptions">{{option.value}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<input type="number" min="0" max="12" style="width: 5em" ng-model="percievedChallenge" placeholder="Percieved Challenge (0-12)">
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<input type="number" min="0" max="12" style="width: 6em" ng-model="percievedAbility" placeholder="Percieved Ability (0-12)">
+		</md-input-container>
+		
+		
+		<!-- all the buttons at the bottom -->
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button ng-click="remove(todo)">Delete</md-button>
+			<md-button ng-show="!edit" ng-click="edit = !edit">Edit</md-button>
+			<md-button ng-show="edit" ng-click="edit = !edit">Save</md-button>
+			<!-- TODO cancel button, and save functionaility -->
+    </md-card-actions>
 	</md-card-content>
-	<md-card-actions layout="row" layout-align="end center">
-		<md-button ng-click="open = !open">Details</md-button>
-		<md-button ng-click="remove(todo)">Delete</md-button>
-	</md-card-actions>
 </md-card>
