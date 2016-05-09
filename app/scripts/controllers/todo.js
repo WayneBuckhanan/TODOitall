@@ -9,9 +9,11 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+
     $scope.todos = [];
 
+    //Syncing for local and remote databases
+    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
     pDB.sync(remoteDB, {
       live: true,
       retry: true
@@ -49,24 +51,71 @@ angular.module('softwareEngineeringTeamApp')
       });
     });
 
-    $scope.priorityOptions = [
-                           {value:'High'},
-                           {value:'Medium'},
-                           {value:'Low'}];
+    //Variables for passing attributes to html
+    $scope.priorityOptions = [{
+      value: 'High'
+    }, {
+      value: 'Medium'
+    }, {
+      value: 'Low'
+    }];
+
+    $scope.taskStates = [{
+      value: "Apathy"
+    }, {
+      value: "Power-Apathy"
+    }, {
+      value: "Power"
+    }, {
+      value: "Power-Stress"
+    }, {
+      value: "Stress"
+    }];
+
     $scope.todoPriority = '';
     //Prioty used for filtering :TODO need to change the name
     $scope.filterPriority = '';
+    $scope.percievedAbility = '';
+    $scope.percievedChallenge = '';
 
+    //Helper funcitons
+
+    $scope.taskStateCalc = function(pAbility, pChallenge) {
+      var state = pChallenge / pAbility;
+
+      if (state <= 4 / 12) {
+        state = "Apathy";
+      } else if (4 / 12 < state && state <= 8 / 12) {
+        state = "Power-Apathy";
+      } else if (8 / 12 < state && state <= 12 / 8) {
+        state = "Power";
+      } else if (12 / 8 < state && state <= 12 / 4) {
+        state = "Power-Stress";
+      } else if (12 / 4 < state) {
+        state = "Stress";
+      } else {
+        state = "";
+      }
+      return state;
+
+    };
+
+    //Main Functions
     $scope.addTodo = function() {
 
-    	if($scope.todoPriority === ''){
-        	$scope.todoPriority = 'Low';
-        }
+      if ($scope.todoPriority === '') {
+        $scope.todoPriority = 'Low';
+      }
+      
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
         done: false,
-        priority: $scope.todoPriority
+        priority: $scope.todoPriority,
+        pAbility: $scope.percievedAbility,
+        pChallenge: $scope.percievedChallenge,
+        taskState: $scope.taskStateCalc($scope.percievedAbility, $scope.percievedChallenge)
+
       };
       $scope.todos.push(newTodo);
       $scope.todoText = '';
@@ -78,10 +127,12 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._rev = res.rev;
       });
       $scope.todoPriority = '';
+      $scope.percievedAbility = '';
+      $scope.percievedChallenge = '';
     };
 
-    $scope.remove = function(todo){
-   		 pDB.remove(todo);
+    $scope.remove = function(todo) {
+      pDB.remove(todo);
     };
 
     $scope.removeDone = function() {
