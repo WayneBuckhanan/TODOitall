@@ -23,7 +23,6 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-touch/angular-touch.js',
       'bower_components/pouchdb/dist/pouchdb.js',
       'bower_components/angular-pouchdb/angular-pouchdb.js',
       'bower_components/angular-aria/angular-aria.js',
