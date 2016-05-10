@@ -38,6 +38,12 @@ _As a_ business user, _I want_ to be able to recognize mission critical tasks _s
 
 _As a_ project manager, _I want_ to be able to track what tasks depend on other tasks _so that_ I can prioritize and plan (and maybe draw Gantt-style charts)
 
+_As a_ new user, _I want_ to create an account and "projects" with lists of tasks _so that_ I can use the platform and be able to group tasks and share those groups with others
+
+_As a_ new user, _I want_ to be guided through creating my first project and prioritizing task/s _so that_ I can quickly understand how to use the platform and see the difference between it and another arbitrary tool
+
+_As a_ project manager, _I want_ to be able to move tasks from my default "project" list to other projects _so that_ I can brain dump without worrying about where it belongs, then sort things into different projects/lists when I'm doing my other sorting/prioritizing steps
+
 _As a_ , _I want_ _so that_
 
 ---
