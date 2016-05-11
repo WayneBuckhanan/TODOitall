@@ -1,0 +1,26 @@
+<md-dialog>
+  <md-dialog-content>
+    <form name="loginForm" layout="column">
+      <md-input-container>
+        <label>Username</label>
+        <input type="text" ng-model="username" placeholder="Enter username" required />
+      </md-input-container>
+      <md-input-container>
+        <label>Password</label>
+        <input type="password" ng-model="password" placeholder="Enter password" required />
+      </md-input-container>
+      <md-input-container ng-show=createAcc>
+        <label>Re enter password</label>
+        <input type="password" ng-model="passwordCheck" placeholder="Enter password" />
+      </md-input-container>
+      <md-dialog-actions>
+        <md-input-container>
+          <md-button type="submit" class="md-raised" ng-show="!createAcc">login in</button>
+        </md-input-container>
+        <md-input-container>
+          <md-button type="button" class="md-raised" ng-click="createAcc = !createAcc">Create Account</button>
+        </md-input-container>
+      </md-dialog-actions>
+    </form>
+  </md-dialog-content>
+</md-dialog>
