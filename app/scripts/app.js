@@ -13,9 +13,10 @@ angular
     'ngAnimate',
     'ngRoute',
     'pouchdb',
-    'ngMaterial'
+    'ngMaterial',
+    'data-table' 
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $mdThemingProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -27,12 +28,27 @@ angular
         controller: 'ToDoCtrl',
         controllerAs: 'todo'
       })
+      .when('/todoData', {
+        templateUrl: 'views/todoData.html',
+        controller: 'ToDoCtrl',
+        controllerAs: 'todo'
+      })
+      .when('/todoData2', {
+        templateUrl: 'views/todoData2.html',
+        controller: 'ToDoCtrl',
+        controllerAs: 'todo'
+      })
       .otherwise({
         redirectTo: '/'
       });
+      
+      
+      $mdThemingProvider.theme('altTheme').primaryPalette('green',{'default': '900'}).accentColor('yellow',{'default': '900'}).warnColor('red',{'default': '900'});
   })
    .controller('SideNav', function($scope, $mdSidenav) {
   $scope.openLeftMenu = function() {
     $mdSidenav('left').toggle();
   };
+  
+  
 });

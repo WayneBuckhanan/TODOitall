@@ -8,12 +8,49 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
-
-    $scope.todos = [];
-
-    //Syncing for local and remote databases
+  .controller('ToDoCtrl', function($scope, $filter, pDB, pouchDB) {
+  
     var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+    
+    $scope.todos = [];
+    $scope.missions = [];
+    
+    
+    $scope.options = {
+  	  scrollbarV: false
+    };
+    
+    
+    $scope.effort = '';
+    $scope.valuez = '';
+    
+    $scope.efforts = [
+          "small (12-inch)",
+          "medium (14-inch)",
+          "large (16-inch)",
+          "insane (42-inch)"
+      ];
+      
+      $scope.sizes = [
+          "small (12-inch)",
+          "medium (14-inch)",
+          "large (16-inch)",
+          "insane (42-inch)"
+      ];
+    
+  
+    
+    $scope.selected = {value: 0};
+    
+    $scope.changeMission = function (todo, value) {
+    	todo.mission = value;
+    	$scope.missions[todo._id] = value;
+    	pDB.put(todo);
+    	
+    	console.log(todo);
+   	 	//console.log(value); 
+	}
+
     pDB.sync(remoteDB, {
       live: true,
       retry: true
@@ -24,8 +61,11 @@ angular.module('softwareEngineeringTeamApp')
       }, function(err, response) {
         $scope.$apply(function() {
           $scope.todos = [];
+          $scope.missions = [];
           response.rows.forEach(function(row) {
             $scope.todos.push(row.doc);
+            var todo = row.doc;
+          	$scope.missions[todo._id] = todo.mission;
           });
         });
       });
@@ -45,77 +85,34 @@ angular.module('softwareEngineeringTeamApp')
     }, function(err, response) {
       $scope.$apply(function() {
         $scope.todos = [];
+        $scope.missions = [];
         response.rows.forEach(function(row) {
           $scope.todos.push(row.doc);
+          var todo = row.doc;
+          $scope.missions[todo._id] = todo.mission;
         });
       });
     });
 
-    //Variables for passing attributes to html
-    $scope.priorityOptions = [{
-      value: 'High'
-    }, {
-      value: 'Medium'
-    }, {
-      value: 'Low'
-    }];
-
-    $scope.taskStates = [{
-      value: "Apathy"
-    }, {
-      value: "Power-Apathy"
-    }, {
-      value: "Power"
-    }, {
-      value: "Power-Stress"
-    }, {
-      value: "Stress"
-    }];
-
+    $scope.priorityOptions = [
+                           {value:'High'},
+                           {value:'Medium'},
+                           {value:'Low'}];
     $scope.todoPriority = '';
     //Prioty used for filtering :TODO need to change the name
     $scope.filterPriority = '';
-    $scope.percievedAbility = '';
-    $scope.percievedChallenge = '';
 
-    //Helper funcitons
-
-    $scope.taskStateCalc = function(pAbility, pChallenge) {
-      var state = pChallenge / pAbility;
-
-      if (state <= 4 / 12) {
-        state = "Apathy";
-      } else if (4 / 12 < state && state <= 8 / 12) {
-        state = "Power-Apathy";
-      } else if (8 / 12 < state && state <= 12 / 8) {
-        state = "Power";
-      } else if (12 / 8 < state && state <= 12 / 4) {
-        state = "Power-Stress";
-      } else if (12 / 4 < state) {
-        state = "Stress";
-      } else {
-        state = "";
-      }
-      return state;
-
-    };
-
-    //Main Functions
     $scope.addTodo = function() {
-
-      if ($scope.todoPriority === '') {
-        $scope.todoPriority = 'Low';
-      }
-      
+    
+    	if($scope.todoPriority == ''){
+        	$scope.todoPriority = 'Low'
+        }
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
         done: false,
         priority: $scope.todoPriority,
-        pAbility: $scope.percievedAbility,
-        pChallenge: $scope.percievedChallenge,
-        taskState: $scope.taskStateCalc($scope.percievedAbility, $scope.percievedChallenge)
-
+        mission: "none"
       };
       $scope.todos.push(newTodo);
       $scope.todoText = '';
@@ -126,15 +123,14 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._id = res.id;
         newTodo._rev = res.rev;
       });
-      $scope.todoPriority = '';
-      $scope.percievedAbility = '';
-      $scope.percievedChallenge = '';
+      $scope.todoPriority = ''
+      $scope.missions[newTodo._id] = newTodo.mission;
     };
-
-    $scope.remove = function(todo) {
-      pDB.remove(todo);
+    
+    $scope.remove = function(todo){
+   		 pDB.remove(todo);
     };
-
+    
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
       $scope.todos = [];
@@ -148,7 +144,7 @@ angular.module('softwareEngineeringTeamApp')
     };
 
     $scope.updateTodo = function(todo) {
-
+      
       todo.done ? todo.done = false : todo.done = true;
       pDB.put(todo);
     };
@@ -161,4 +157,5 @@ angular.module('softwareEngineeringTeamApp')
       return count;
     };
 
-  });
+  })
+  

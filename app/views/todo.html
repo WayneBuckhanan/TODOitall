@@ -1,7 +1,10 @@
+<md-tabs md-dynamic-height md-border-bottom>
+<md-tab label="Add">
 <h1>Todo Pouch</h1>
 <span>{{remaining()}} of {{todos.length}} remaining</span>
 <md-button class="button" ng-click="removeDone()">Remove done</md-button>
 
+<div layout="column" >
 <md-content layout-padding>
 
 	<form ng-submit="addTodo()">
@@ -41,6 +44,8 @@
 	</form>
 
 </md-content>
+</md-tab>
+<md-tab label="View">
 <!--Filter box-->
 <md-input-container>
 	<md-select ng-model="filterPriority">
@@ -51,27 +56,51 @@
 	</md-select>
 </md-input-container>
 
-<md-input-container>
-	<md-select ng-model="filterTaskState">
-		<md-option value=''>All</md-option>
-		<md-option ng-repeat="states in taskStates" value="{{states.value}}">{{states.value}}</md-option>
-	</md-select>
-</md-input-container>
+<md-card ng-repeat="todo in todos  | filter:{priority:filterPriority}">
+        <md-card-title>
+          <md-checkbox class="md-headline" aria-label="Checkbox 1" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
+        </md-card-title>
+        <md-card-content ng-show="open">
+        <p>Priority: {{todo.priority}}</p>
+        <p>Done: {{todo.done}}</p>
+		</md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button ng-click="open = !open">Details</md-button>
+          <md-button ng-click="remove(todo)">Delete</md-button>
+        </md-card-actions>
+      </md-card>
+</md-tab>
 
-<md-card ng-repeat="todo in todos  | filter:({priority:filterPriority} && {taskState:filterTaskState})">
-	<!--Displays a todo as a card-->
-	<md-card-title>
-		<md-checkbox class="md-headline" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
-	</md-card-title>
-	<md-card-content ng-show="open">
-		<p>Priority: {{todo.priority}}</p>
-		<p>Done: {{todo.done}}</p>
-		<p>Percieved Challenge: {{todo.pChallenge}}</p>
-		<p>Percieved Ability: {{todo.pAbility}}</p>
-		<p>Task State: {{todo.taskState}}</p>
-	</md-card-content>
-	<md-card-actions layout="row" layout-align="end center">
-		<md-button ng-click="open = !open">Details</md-button>
-		<md-button ng-click="remove(todo)">Delete</md-button>
-	</md-card-actions>
-</md-card>
+<md-tab label="Mission">
+<dtable options="options" rows="todos" class="material dt">
+  <column name="text">
+    {{$row.text}}
+  </column>
+  <column name="Critical" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'critical')">
+    <md-radio-button  class="md-primary" value="critical"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Incidental" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'incidental')">
+    <md-radio-button  class="md-accent" value="incidental"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Optional" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'optional')">
+    <md-radio-button  class="md-warn" value="optional"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>  
+  <column name="mission">
+  	{{$row.mission}}
+  </column>
+</dtable>
+</md-tab>
+</md-tabs>
+
