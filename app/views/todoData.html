@@ -1,0 +1,27 @@
+<dtable options="options" rows="todos" class="material dt">
+  <column name="Task" width="500" flex-grow="2">
+    {{$row.text}}
+  </column>
+  <column name="Critical" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="Value[$row.text]">
+    <md-radio-button  class="md-primary" value="critical"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Incidental" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="Value[$row.text]" ng-change="getPostIndex($row, 'incidental')">
+    <md-radio-button  class="md-accent" value="incidental"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Optional" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="Value[$row.text]">
+    <md-radio-button  class="md-warn" value="optional"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>  
+</dtable>
+

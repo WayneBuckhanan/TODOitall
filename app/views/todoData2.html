@@ -1,0 +1,17 @@
+<dtable options="options" rows="todos" class="material dt">
+  <column name="Task" width="500" flex-grow="2">
+    {{$row.text}}
+  </column>
+  <column name="Value" flex-grow="2">
+    <md-input-container style="margin-right: 10px;">
+        <label>Size</label>
+        <md-select ng-model="size">
+          <md-option ng-repeat="size in sizes" value="{{size}}">{{size}}</md-option>
+        </md-select>
+      </md-input-container>
+  </column>
+  <column name="Effort" width="100">
+    
+  </column>  
+</dtable>
+
