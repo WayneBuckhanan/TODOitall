@@ -13,7 +13,8 @@ angular
     'ngAnimate',
     'ngRoute',
     'pouchdb',
-    'ngMaterial'
+    'ngMaterial',
+    'ngMessages'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -18,5 +18,4 @@ angular.module('softwareEngineeringTeamApp')
           clickOutsideToClose:true
         });
       };
-    $scope.signup
   });

@@ -3,22 +3,30 @@
     <form name="loginForm" layout="column">
       <md-input-container>
         <label>Username</label>
-        <input type="text" ng-model="username" placeholder="Enter username" required />
+        <input type="text"  ng-model="username" name="name" placeholder="Enter username" maxlength="10" minlength="5" required/>
+        <div ng-messages="loginForm.name.$error" ng-show="loginForm.name.$touched">
+          <div ng-message="required">This field is required</div>
+          <div ng-message="minlength">Username must be at least 5 characters long</div>
+        </div>
       </md-input-container>
+
       <md-input-container>
         <label>Password</label>
         <input type="password" ng-model="password" placeholder="Enter password" required />
       </md-input-container>
+
       <md-input-container ng-show=createAcc>
         <label>Re enter password</label>
         <input type="password" ng-model="passwordCheck" placeholder="Enter password" />
       </md-input-container>
+
       <md-dialog-actions>
         <md-input-container>
-          <md-button type="submit" class="md-raised" ng-show="!createAcc">login in</button>
+          <md-button type="submit" class="md-raised" ng-click="login()" ng-show="!createAcc">login in</button>
         </md-input-container>
+
         <md-input-container>
-          <md-button type="button" class="md-raised" ng-click="createAcc = !createAcc">Create Account</button>
+          <md-button type="button" class="md-raised" ng-click="createAccount()">Create Account</button>
         </md-input-container>
       </md-dialog-actions>
     </form>
