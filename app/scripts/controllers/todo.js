@@ -14,43 +14,32 @@ angular.module('softwareEngineeringTeamApp')
     
     $scope.todos = [];
     $scope.missions = [];
+    $scope.efforts = [];
     
     
-    $scope.options = {
+    $scope.missionOptions = {
   	  scrollbarV: false
     };
     
-    
-    $scope.effort = '';
-    $scope.valuez = '';
-    
-    $scope.efforts = [
-          "small (12-inch)",
-          "medium (14-inch)",
-          "large (16-inch)",
-          "insane (42-inch)"
-      ];
-      
-      $scope.sizes = [
-          "small (12-inch)",
-          "medium (14-inch)",
-          "large (16-inch)",
-          "insane (42-inch)"
-      ];
-    
-  
+    $scope.effortOptions = {
+  	  scrollbarV: false
+    };
     
     $scope.selected = {value: 0};
     
-    $scope.changeMission = function (todo, value) {
-    	todo.mission = value;
-    	$scope.missions[todo._id] = value;
+    $scope.changeMission = function (todo, mission) {
+    	
+    	todo.mission = mission;
+    	$scope.missions[todo._id] = mission;
     	pDB.put(todo);
     	
     	console.log(todo);
-   	 	//console.log(value); 
-	}
-
+	};
+	
+	$scope.submit = function(todo) {
+      pDB.put(todo);
+    };
+	
     pDB.sync(remoteDB, {
       live: true,
       retry: true
@@ -86,10 +75,12 @@ angular.module('softwareEngineeringTeamApp')
       $scope.$apply(function() {
         $scope.todos = [];
         $scope.missions = [];
+        $scope.efforts = [];
         response.rows.forEach(function(row) {
           $scope.todos.push(row.doc);
           var todo = row.doc;
           $scope.missions[todo._id] = todo.mission;
+          $scope.efforts[todo._id] = todo.effort;
         });
       });
     });
@@ -112,7 +103,9 @@ angular.module('softwareEngineeringTeamApp')
         text: $scope.todoText,
         done: false,
         priority: $scope.todoPriority,
-        mission: "none"
+        mission: "none",
+        effort: 0,
+        value: 0
       };
       $scope.todos.push(newTodo);
       $scope.todoText = '';
@@ -125,6 +118,7 @@ angular.module('softwareEngineeringTeamApp')
       });
       $scope.todoPriority = ''
       $scope.missions[newTodo._id] = newTodo.mission;
+      $scope.efforts[newTodo._id] = newTodo.effort;
     };
     
     $scope.remove = function(todo){
