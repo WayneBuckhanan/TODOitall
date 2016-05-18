@@ -7,12 +7,15 @@
         <div ng-messages="loginForm.name.$error" ng-show="loginForm.name.$touched">
           <div ng-message="required">This field is required</div>
           <div ng-message="minlength">Username must be at least 5 characters long</div>
+          <div ng-messages-exp="$scope.error">
+            {{$scope.errMes}}
+          </div>
         </div>
       </md-input-container>
 
       <md-input-container>
         <label>Password</label>
-        <input type="password" ng-model="password" placeholder="Enter password" required />
+        <input type="password" name="pass" ng-model="password" placeholder="Enter password" required />
       </md-input-container>
 
       <md-input-container ng-show=createAcc>

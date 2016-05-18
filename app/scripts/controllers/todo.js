@@ -8,12 +8,12 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, pDB, pouchDB) {
+  .controller('ToDoCtrl', function($scope, pDB, remoteDB, pouchDB) {
 
     $scope.todos = [];
 
     //Syncing for local and remote databases
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
+
     pDB.sync(remoteDB, {
       live: true,
       retry: true
@@ -106,7 +106,7 @@ angular.module('softwareEngineeringTeamApp')
       if ($scope.todoPriority === '') {
         $scope.todoPriority = 'Low';
       }
-      
+
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,

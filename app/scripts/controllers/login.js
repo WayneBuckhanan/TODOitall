@@ -8,24 +8,24 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('LoginCtrl', function($scope, pDB) {
+  .controller('LoginCtrl', function($scope, remoteDB) {
     $scope.signup = function() {
       if ($scope.createAcc === true) {
-        pDB.signup($scope.username, $scope.password, function(err, response) {
-            if (err) {
-              if (err.name === 'conflict') {
-                $scope.error = true;
-                $scope.errMes = "This username already exists";
-              } else if (err.name === 'forbidden') {
-                $scope.error = true;
-                $scope.errMes = "This username is not allowed";
-              } else if ($scope.password !== $scope.passwordCheck) {
-                $scope.error = true;
-                $scope.errorMes = "Your passwords do not match";
-              } else {
+        remoteDB.signup($scope.username, $scope.password, function(err, response) {
+          if (err) {
+            if (err.name === 'conflict') {
+              $scope.error = true;
+              $scope.errMes = "This username already exists";
+            } else if (err.name === 'forbidden') {
+              $scope.error = true;
+              $scope.errMes = "This username is not allowed";
+            } else if ($scope.password !== $scope.passwordCheck) {
+              $scope.error = true;
+              $scope.errorMes = "Your passwords do not match";
+            } else {
 
-              }
             }
+          }
         });
 
         $scope.createAcc = false;
@@ -37,7 +37,7 @@ angular.module('softwareEngineeringTeamApp')
       }
     };
     $scope.login = function() {
-      pDB.login($scope.username, $scope.password, function(err, response) {
+      remoteDB.login($scope.username, $scope.password, function(err, response) {
         if (err) {
           if (err.name === 'unauthorized') {} else {}
         }
