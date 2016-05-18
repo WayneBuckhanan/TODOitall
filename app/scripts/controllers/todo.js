@@ -8,7 +8,7 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, pDB, remoteDB, pouchDB) {
+  .controller('ToDoCtrl', function($scope, pDB, remoteDB) {
 
     $scope.todos = [];
 

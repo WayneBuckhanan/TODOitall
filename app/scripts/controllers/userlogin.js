@@ -11,7 +11,7 @@ angular.module('softwareEngineeringTeamApp')
   .controller('UserloginCtrl', function($scope, $mdDialog, remoteDB) {
     $scope.loginDialog = function(ev) {
       $mdDialog.show({
-        controller: 'UserloginCtrl',
+        controller: 'LoginCtrl',
         templateUrl: 'views/login.html',
         parent: angular.element(document.body),
         targetEvent: ev,
@@ -19,24 +19,11 @@ angular.module('softwareEngineeringTeamApp')
       });
     };
 
-    $scope.currentUser = function() {
-      remoteDB.getSession(function(err, response) {
-        if (err) {
-          return "error";
-        } else if (!response.userCtx.name) {
-          return "not logged in";
-        } else {
-          return response.userCtx.name;
-        }
-      });
-
-    //   return remoteDB.getSession(function(err, response){
-    //     if(err){
-    //       return "well shit";
-    //     }
-    //     else if(!response.userCtx.name){
-    //       return "no login";
-    //     }
-    //   });
-    // };
+  $scope.currentUser = remoteDB.getSession(function(err, response) {
+      if (!response.userCtx.name) {
+        $scope.currentUser = "not logged in";
+      } else {
+        $scope.currentUser = response.userCtx.name; //response.userCtx.name;
+      }
+    });
   });

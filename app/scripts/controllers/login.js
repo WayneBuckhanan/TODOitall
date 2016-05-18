@@ -9,6 +9,8 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('LoginCtrl', function($scope, remoteDB) {
+    $scope.createAcc = false;
+
     $scope.signup = function() {
       if ($scope.createAcc === true) {
         remoteDB.signup($scope.username, $scope.password, function(err, response) {
@@ -25,6 +27,8 @@ angular.module('softwareEngineeringTeamApp')
             } else {
 
             }
+          } else {
+            $scope.createAcc = true;
           }
         });
 
@@ -35,11 +39,13 @@ angular.module('softwareEngineeringTeamApp')
       } else {
         $scope.createAcc = true;
       }
-    };
+   };
     $scope.login = function() {
       remoteDB.login($scope.username, $scope.password, function(err, response) {
         if (err) {
-          if (err.name === 'unauthorized') {} else {}
+          if (err.name === 'unauthorized') {
+          } else {
+          }
         }
       });
       $scope.username = "";

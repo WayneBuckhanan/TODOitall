@@ -16,7 +16,15 @@ angular
     'ngMaterial',
     'ngMessages'
   ])
-  .config(function ($routeProvider) {
+  .config(function($routeProvider,pouchDBProvider, POUCHDB_METHODS) {
+    var authMethods = {
+      login: 'qify',
+      logout: 'qify',
+      getSession: 'qify',
+      signup: 'qify'
+    };
+    pouchDBProvider.methods = angular.extend({}, POUCHDB_METHODS, authMethods);
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -32,8 +40,8 @@ angular
         redirectTo: '/'
       });
   })
-   .controller('SideNav', function($scope, $mdSidenav) {
-  $scope.openLeftMenu = function() {
-    $mdSidenav('left').toggle();
-  };
-});
+  .controller('SideNav', function($scope, $mdSidenav) {
+    $scope.openLeftMenu = function() {
+      $mdSidenav('left').toggle();
+    };
+  });
