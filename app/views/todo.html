@@ -12,7 +12,7 @@
                         </md-input-container>
 
                         <md-input-container>
-                            <md-select ng-model="todoPriority">
+                            <md-select aria-label="Priority" ng-model="todoPriority">
                                 <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
                                 <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
                                 <md-option value="" selected disabled>Please select a priority...</md-option>
@@ -47,7 +47,7 @@
         <md-button class="button" ng-click="removeDone()">Remove done</md-button>
         <!--Filter box-->
         <md-input-container>
-            <md-select ng-model="filterPriority">
+            <md-select aria-label="Priority Filter" ng-model="filterPriority">
                 <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
                 <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
                 <md-option value=''>All</md-option>
