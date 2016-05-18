@@ -11,30 +11,29 @@
 		
 		
 	<!-- These edit options are set up to only show up when edit has been selected. -->
-	<md-input-container ng-show="edit"> 
-		<input type="text" aria-label="name" ng-model="todo.text" size="30">
-	</md-input-container>
-	<md-input-container ng-show="edit">
-		<md-select aria-label="Priority" ng-model="todoPriority">
-			<!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
-			<!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
-			<md-option value="" selected disabled>Please select a priority...</md-option>
-			<md-option ng-repeat="option in priorityOptions">{{option.value}}</md-option>
-		</md-select>
-	</md-input-container>
-	<md-input-container ng-show="edit">
-		<input type="number" min="0" max="12" style="width: 5em" ng-model="percievedChallenge" placeholder="Percieved Challenge (0-12)">
-	</md-input-container>
-	<md-input-container ng-show="edit">
-		<input type="number" min="0" max="12" style="width: 6em" ng-model="percievedAbility" placeholder="Percieved Ability (0-12)">
-	</md-input-container>
+	<form ng-submit="editTodo(todo)">
+		<md-input-container ng-show="edit"> 
+			<input type="text" aria-label="name" ng-model="todo.text" size="30">
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<md-select aria-label="Priority" ng-model="todoPriority">
+				<md-option value="" selected disabled>Please select a priority...</md-option>
+				<md-option ng-repeat="option in priorityOptions">{{option.value}}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<input type="number" min="0" max="12" style="width: 5em" ng-model="percievedChallenge" placeholder="Percieved Challenge (0-12)">
+		</md-input-container>
+		<md-input-container ng-show="edit">
+			<input type="number" min="0" max="12" style="width: 6em" ng-model="percievedAbility" placeholder="Percieved Ability (0-12)">
+		</md-input-container>
+		<md-button type="submit" ng-show="edit" ng-click="edit = !edit">Save</md-button>
+	</form>
 	
-	
-	<!-- all the buttons at the bottom -->
-   <md-card-actions layout="row" layout-align="end center">
+		<!-- all the buttons at the bottom -->
+    <md-card-actions layout="row" layout-align="end center">
     <md-button ng-click="remove(todo)">Delete</md-button>
 		<md-button ng-show="!edit" ng-click="edit = !edit">Edit</md-button>
-		<md-button ng-show="edit" ng-click="edit = !edit">Save</md-button>
 		<!-- TODO cancel button, and save functionaility -->
   </md-card-actions>
 </md-card-content>

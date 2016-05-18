@@ -146,6 +146,11 @@ angular.module('softwareEngineeringTeamApp')
         }
       });
     };
+		
+		$scope.editTodo = function(todo) {
+			$scope.addTodo()
+			$scope.remove(todo)
+		};
 
     $scope.updateTodo = function(todo) {
 
