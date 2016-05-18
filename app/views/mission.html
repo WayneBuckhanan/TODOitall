@@ -1,0 +1,29 @@
+<dtable options="missionOptions" rows="todos" class="material dt">
+  <column name="text">
+    {{$row.text}}
+  </column>
+  <column name="Critical" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'critical')">
+    <md-radio-button  class="md-primary" value="critical"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Incidental" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'incidental')">
+    <md-radio-button  class="md-accent" value="incidental"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Optional" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'optional')">
+    <md-radio-button  class="md-warn" value="optional"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>  
+  <column name="mission">
+  	{{$row.mission}}
+  </column>
+</dtable>
