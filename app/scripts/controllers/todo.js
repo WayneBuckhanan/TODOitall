@@ -107,6 +107,7 @@ angular.module('softwareEngineeringTeamApp')
         effort: 0,
         value: 0
       };
+      console.log($scope.todoPriority);
       $scope.todos.push(newTodo);
       $scope.todoText = '';
       pDB.post(newTodo, function(err, res) {
@@ -119,6 +120,8 @@ angular.module('softwareEngineeringTeamApp')
       $scope.todoPriority = ''
       $scope.missions[newTodo._id] = newTodo.mission;
       $scope.efforts[newTodo._id] = newTodo.effort;
+            console.log(newTodo);
+
     };
     
     $scope.remove = function(todo){
