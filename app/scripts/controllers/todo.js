@@ -14,7 +14,11 @@ angular.module('softwareEngineeringTeamApp')
     
     $scope.todos = [];
     $scope.missions = [];
+    $scope.values = [];
     $scope.efforts = [];
+    $scope.challenges = [];
+    $scope.abilities = [];
+    $scope.priorities = [];
     
     
     $scope.missionOptions = {
@@ -22,6 +26,10 @@ angular.module('softwareEngineeringTeamApp')
     };
     
     $scope.effortOptions = {
+  	  scrollbarV: false
+    };
+    
+    $scope.abilityOptions = {
   	  scrollbarV: false
     };
     
@@ -37,6 +45,9 @@ angular.module('softwareEngineeringTeamApp')
 	};
 	
 	$scope.submit = function(todo) {
+	
+	          console.log(todo);
+
       pDB.put(todo);
     };
 	
@@ -55,6 +66,11 @@ angular.module('softwareEngineeringTeamApp')
             $scope.todos.push(row.doc);
             var todo = row.doc;
           	$scope.missions[todo._id] = todo.mission;
+          	$scope.values[todo._id] = todo.value;
+          $scope.efforts[todo._id] = todo.effort;
+          $scope.challenges[todo._id] = todo.challenge;
+          $scope.abilities[todo._id] = todo.ability;
+          $scope.priorities[todo._id] = todo.priority;
           });
         });
       });
@@ -80,7 +96,11 @@ angular.module('softwareEngineeringTeamApp')
           $scope.todos.push(row.doc);
           var todo = row.doc;
           $scope.missions[todo._id] = todo.mission;
+            $scope.values[todo._id] = todo.value;
           $scope.efforts[todo._id] = todo.effort;
+          $scope.challenges[todo._id] = todo.challenge;
+          $scope.abilities[todo._id] = todo.ability;
+          $scope.priorities[todo._id] = todo.priority;
         });
       });
     });
@@ -96,7 +116,7 @@ angular.module('softwareEngineeringTeamApp')
     $scope.addTodo = function() {
     
     	if($scope.todoPriority == ''){
-        	$scope.todoPriority = 'Low'
+        	$scope.todoPriority = 'Low';
         }
       var newTodo = {
         _id: Math.uuid,
@@ -105,9 +125,12 @@ angular.module('softwareEngineeringTeamApp')
         priority: $scope.todoPriority,
         mission: "none",
         effort: 0,
-        value: 0
+        value: 0,
+        challenge: $scope.todoChallenge,
+        ability: $scope.todoAbility
       };
       console.log($scope.todoPriority);
+      console.log(newTodo);
       $scope.todos.push(newTodo);
       $scope.todoText = '';
       pDB.post(newTodo, function(err, res) {
@@ -119,9 +142,11 @@ angular.module('softwareEngineeringTeamApp')
       });
       $scope.todoPriority = ''
       $scope.missions[newTodo._id] = newTodo.mission;
+      $scope.values[newTodo._id] = newTodo.value;
       $scope.efforts[newTodo._id] = newTodo.effort;
-            console.log(newTodo);
-
+      $scope.challenges[newTodo._id] = newTodo.challenge;
+      $scope.abilities[newTodo._id] = newTodo.ability;
+      $scope.priorities[todo._id] = newTodo.priority;
     };
     
     $scope.remove = function(todo){

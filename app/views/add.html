@@ -4,7 +4,7 @@
 
                 <form ng-submit="addTodo()">
                     <!--Form containing todo and prioty spec-->
-                    <div layout-gt-sm="row">
+                    <md-content layout-gt-sm="row" layout-padding="">
                         <md-input-container>
                             <input type="text" ng-model="todoText" size="30" placeholder="add new todo here">
                         </md-input-container>
@@ -14,20 +14,10 @@
                                 <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
                                 <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
                                 <md-option value="" selected disabled>Please select a priority...</md-option>
-                                <md-option ng-repeat="option in priorityOptions" value="{{option.value}}">{{option.value}}</md-option>
+                                <md-option ng-repeat="option in priorityOptions">{{option.value}}</md-option>
                             </md-select>
                         </md-input-container>
-
-                        <div layout-gt-sm="row" ng-show="showAdv">
-                            <md-input-container>
-                                <input type="number" min="0" max="12" style="width: 5em" ng-model="percievedChallenge" placeholder="Percieved Challenge (0-12)">
-                            </md-input-container>
-
-                            <md-input-container>
-                                <input type="number" min="0" max="12" style="width: 6em" ng-model="percievedAbility" placeholder="Percieved Ability (0-12)">
-                            </md-input-container>
-                        </div>
-
+                        
                         <md-input-container>
                             <md-button ng-click="showAdv = !showAdv">Advanced</md-button>
                         </md-input-container>
@@ -35,7 +25,28 @@
                         <md-input-container>
                             <md-button type="submit" ng-click="showAdv = false">Add Task</md-button>
                         </md-input-container>
-                    </div>
+                        </md-content>
+                        <md-content layout-gt-sm="column" ng-show="showAdv">
+                        <div layout-gt-sm="row">
+                            <md-input-container>
+                                <input type="number" min="0" max="12" style="width: 10em" ng-init="todoEffort=0" ng-model="todoEffort" placeholder="Effort (0-7)">
+                            </md-input-container>
+
+                            <md-input-container>
+                                <input type="number" min="0" max="12"  style="width: 10em" ng-init="todoValue=0" ng-model="todoValue" placeholder="Value (0-7)">
+                            </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                            <md-input-container>
+                                <input type="number" min="0" max="12" style="width: 10em" ng-init="todoChallenge=0" ng-model="todoChallenge" placeholder="Challenge (0-12)">
+                            </md-input-container>
+
+                            <md-input-container>
+                                <input type="number" min="0" max="12"  style="width: 10em" ng-init="todoAbility=0"  ng-model="todoAbility" placeholder="Ability (0-12)">
+                            </md-input-container>
+                            </div>
+                        </md-content>
+
                 </form>
 
             </md-content>

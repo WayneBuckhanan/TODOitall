@@ -1,15 +1,15 @@
-<dtable options="effortOptions" rows="todos" class="material dt">
+<dtable options="abilityOptions" rows="todos" class="material dt">
   <column name="Task" width="200" flex-grow="2">
     {{$row.text}}
   </column>
-  <column name="value" width="200" flex-grow="2">
+  <column name="Ability" width="200" flex-grow="2">
   <md-input-container>
-		<input type="number" ng-model="$row.value" min="0" max="7" style="width: 6em" ng-blur="submit($row)" placeholder="Value (0-7)">
-	</md-input-container>
-  </column>
-  <column name="effort" width="200" flex-grow="2">
-  <md-input-container>
-		<input type="number" ng-model="$row.effort" min="0" max="7" style="width: 6em" ng-blur="submit($row)" placeholder="Effort (0-7)">
+		<input type="number" ng-model="$row.ability" min="0" max="12" style="width: 6em" ng-blur="submit($row)" placeholder="Ability (0-12)">
 	</md-input-container>
   </column>  
+  <column name="Challenge" width="200" flex-grow="2">
+  <md-input-container>
+		<input type="number" ng-model="$row.challenge" min="0" max="12" style="width: 6em" ng-blur="submit($row)" placeholder="Challenge (0-12)">
+	</md-input-container>
+  </column>
 </dtable>
