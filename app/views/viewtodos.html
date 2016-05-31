@@ -1,16 +1,18 @@
  <span>{{remaining()}} of {{todos.length}} remaining</span>
         <md-button class="button" ng-click="removeDone()">Remove done</md-button>
+        <md-button class="button" ng-click="removeAll()">Remove all</md-button>
+
         <!--Filter box-->
         <md-input-container>
-            <md-select aria-label="Priority Filter" ng-model="filterPriority">
-                <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
-                <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
-                <md-option value=''>All</md-option>
-                <md-option ng-repeat="option in priorityOptions" value="{{option.value}}">{{option.value}}</md-option>
-            </md-select>
+        	<md-select ng-model="filterPriority">
+        		<md-option value="">All</md-option>
+				<md-option value="High">High</md-option>
+    			<md-option value="Medium">Medium</md-option>    
+    			<md-option value="Low">Low</md-option>                         	
+    		</md-select>                            
         </md-input-container>
 
-        <md-card ng-repeat="todo in todos | filter:{priority:filterPriority}">
+        <md-card ng-repeat="todo in todos | filter: filterPriorityFunction">
             <md-card-title>
                 <md-checkbox class="md-headline" aria-label="Checkbox 1" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
             </md-card-title>
@@ -26,7 +28,12 @@
                 <div ng-show="open">
                     <div ng-show="details">
                         <p>Priority: {{priorities[todo._id]}}</p>
-                        <p>Done: {{todo.done}}</p>
+                        <p>Mission: {{todo.mission}}</p>
+                        <p>Income: {{todo.income}}</p>
+                        <p>Effort: {{todo.effort}}</p>
+                        <p>Value: {{todo.value}}</p>
+                        <p>Ability: {{todo.ability}}</p>
+                        <p>Challenge: {{todo.challenge}}</p>
                     </div>
                     <form layout="column" ng-show="edit">
                         <md-input-container>

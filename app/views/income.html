@@ -1,0 +1,29 @@
+<dtable options="incomeOptions" rows="todos" class="material dt">
+  <column name="Text">
+    {{$row.text}}
+  </column>
+  <column name="Generating" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="incomes[$row._id]" ng-change="changeIncome($row, 'generating')">
+    <md-radio-button aria-label="Income Generating"  class="md-primary" value="generating"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Consuming" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="incomes[$row._id]" ng-change="changeIncome($row, 'consuming')">
+    <md-radio-button  aria-label="Income Consuming" class="md-accent" value="consuming"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Conserving" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="incomes[$row._id]" ng-change="changeIncome($row, 'conserving')">
+    <md-radio-button  aria-label="Income Conserving" class="md-warn" value="conserving"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>  
+  <column name="Mission">
+  	{{$row.income}}
+  </column>
+</dtable>

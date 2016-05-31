@@ -6,15 +6,14 @@
                     <!--Form containing todo and prioty spec-->
                     <md-content layout-gt-sm="row" layout-padding="">
                         <md-input-container>
-                            <input type="text" ng-model="todoText" size="30" placeholder="add new todo here">
+                            <input required type="text" ng-model="todoText" size="30" placeholder="add new todo here">
                         </md-input-container>
 
                         <md-input-container>
                             <md-select aria-label="Priority" ng-model="todoPriority">
-                                <!--I used ng preate with options tag, because there is a buy in the ng-options directive which makes  -->
-                                <!--retriving information difficult (upon retrivel angular adds $$hash to the object)  -->
-                                <md-option value="" selected disabled>Please select a priority...</md-option>
-                                <md-option ng-repeat="option in priorityOptions">{{option.value}}</md-option>
+                                <md-option value="High">High</md-option>
+    							<md-option value="Medium">Medium</md-option>    
+    							<md-option value="Low" ng-selected="true">Low</md-option>  
                             </md-select>
                         </md-input-container>
                         
@@ -29,20 +28,36 @@
                         <md-content layout-gt-sm="column" ng-show="showAdv">
                         <div layout-gt-sm="row">
                             <md-input-container>
-                                <input type="number" min="0" max="12" style="width: 10em" ng-init="todoEffort=0" ng-model="todoEffort" placeholder="Effort (0-7)">
-                            </md-input-container>
-
+                            	<p>Mission:</p>
+								<md-select ng-model="todoMission">
+									<md-option value="critical">Critical</md-option>
+    								<md-option value="incidental">Incidental</md-option>    
+    								<md-option value="optional" ng-selected="true">Optional</md-option>                         	
+    							</md-select>                            
+                           	</md-input-container>
                             <md-input-container>
-                                <input type="number" min="0" max="12"  style="width: 10em" ng-init="todoValue=0" ng-model="todoValue" placeholder="Value (0-7)">
+                            	<p>Income:</p>
+								<md-select ng-model="todoIncome">
+									<md-option value="generating">Generating</md-option>
+    								<md-option value="consuming">Consuming</md-option>    
+    								<md-option value="conserving" ng-selected="true">Conserving</md-option>                         	
+    							</md-select>                            
+                           	</md-input-container>
+                            </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container>
+                                <input type="number" min="0" max="7" style="width: 10em" ng-click="todoEffort = null" ng-model="todoEffort" placeholder="Effort (0-7)">
+                            </md-input-container>
+                            <md-input-container>
+                                <input type="number" min="0" max="7"  style="width: 10em" ng-click="todoValue = null" ng-model="todoValue" placeholder="Value (0-7)">
                             </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
                             <md-input-container>
-                                <input type="number" min="0" max="12" style="width: 10em" ng-init="todoChallenge=0" ng-model="todoChallenge" placeholder="Challenge (0-12)">
+                                <input type="number" min="0" max="12"  style="width: 10em" ng-click="todoAbility = null"  ng-model="todoAbility" placeholder="Ability (0-12)">
                             </md-input-container>
-
                             <md-input-container>
-                                <input type="number" min="0" max="12"  style="width: 10em" ng-init="todoAbility=0"  ng-model="todoAbility" placeholder="Ability (0-12)">
+                                <input type="number" min="0" max="12" style="width: 10em" ng-click="todoChallenge = null" ng-model="todoChallenge" placeholder="Challenge (0-12)">
                             </md-input-container>
                             </div>
                         </md-content>

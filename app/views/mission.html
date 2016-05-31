@@ -1,3 +1,11 @@
+<md-input-container>
+        	<md-select ng-model="filterPriority">
+        		<md-option value="">All</md-option>
+				<md-option value="High">High</md-option>
+    			<md-option value="Medium">Medium</md-option>    
+    			<md-option value="Low">Low</md-option>                         	
+    		</md-select>                            
+        </md-input-container>
 <dtable options="missionOptions" rows="todos" class="material dt">
   <column name="Text">
     {{$row.text}}
@@ -23,7 +31,6 @@
     </md-radio-group>
     </div>
   </column>  
-  <column name="Mission">
-  	{{$row.mission}}
+  <column name="mission" prop="mission" group="true">
   </column>
 </dtable>
