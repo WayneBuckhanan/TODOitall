@@ -7,9 +7,7 @@
  * # menubar
  */
 angular.module('softwareEngineeringTeamApp')
-  .directive('menubar', function () {
-    return {
+  .component('menubar',{
       templateUrl: 'views/menubar.html',
-      restrict: 'E',
-    };
-  });
+    }
+  );

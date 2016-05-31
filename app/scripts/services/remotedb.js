@@ -8,9 +8,9 @@
  * Factory in the softwareEngineeringTeamApp.
  */
 angular.module('softwareEngineeringTeamApp')
-  .factory('remoteDB', function(pouchDB) {
+  .factory('remoteDB', function() {
 
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo', {
+    var remoteDB = new PouchDB('http://todoitall.mercs.net:5984/todo', {
       skipSetup: true
     });
 

@@ -12,18 +12,10 @@ angular
   .module('softwareEngineeringTeamApp', [
     'ngAnimate',
     'ngRoute',
-    'pouchdb',
     'ngMaterial',
     'ngMessages'
   ])
-  .config(function($routeProvider,pouchDBProvider, POUCHDB_METHODS) {
-    var authMethods = {
-      login: 'qify',
-      logout: 'qify',
-      getSession: 'qify',
-      signup: 'qify'
-    };
-    pouchDBProvider.methods = angular.extend({}, POUCHDB_METHODS, authMethods);
+  .config(function($routeProvider) {
 
     $routeProvider
       .when('/', {

@@ -8,7 +8,8 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('UserloginCtrl', function($scope, $mdDialog, remoteDB) {
+  .controller('UserloginCtrl', function($scope, $mdDialog, remoteDB,$q, isLoggedIn) {
+
     $scope.loginDialog = function(ev) {
       $mdDialog.show({
         controller: 'LoginCtrl',
@@ -19,11 +20,26 @@ angular.module('softwareEngineeringTeamApp')
       });
     };
 
-  $scope.currentUser = remoteDB.getSession(function(err, response) {
-      if (!response.userCtx.name) {
-        $scope.currentUser = "not logged in";
-      } else {
-        $scope.currentUser = response.userCtx.name; //response.userCtx.name;
-      }
-    });
+    $scope.getSession = function() {
+      isLoggedIn.then(function(result){
+        $scope.currentUser = result;
+      })
+      return $scope.currentUser;
+    }
+      // $q.when(remoteDB.getSession(function(err, response) {
+      //   if (err) {
+      //     $scope.currentUser = "nope";
+      //     console.log("f");
+      //   }
+      //   if (!response.userCtx.name) {
+      //     $scope.currentUser = "not logged in";
+      //     console.log("ff");
+      //   } else {
+      //     $scope.currentUser = response.userCtx.name;
+      //     console.log("fff");
+      //   }
+      // }));
+    //};
+
+    $scope.currentUser = isLoggedIn;
   });

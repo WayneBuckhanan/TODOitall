@@ -1,9 +1,9 @@
 <div layout="row">
 
-<md-button ng-click="loginDialog($event)">
-  Login
-</md-button>
-<div>
-{{currentUser}}
-</div>
+  <md-button ng-click="loginDialog($event)">
+    Login
+  </md-button>
+  <div ng-init="getSession()">
+    {{currentUser}}
+  </div>
 </div>

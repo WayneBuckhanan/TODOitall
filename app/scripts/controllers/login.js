@@ -19,7 +19,6 @@ angular.module('softwareEngineeringTeamApp')
               $scope.error = true;
               $scope.errMes = "This username already exists";
             } else if (err.name === 'forbidden') {
-              $scope.error = true;
               $scope.errMes = "This username is not allowed";
             } else if ($scope.password !== $scope.passwordCheck) {
               $scope.error = true;
