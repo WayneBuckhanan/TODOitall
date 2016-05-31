@@ -15,7 +15,7 @@ angular.module('softwareEngineeringTeamApp')
           return "error";
         }
         if (!res.userCtx.name) {
-          return "not logged in";
+          return "loginEmpty";
         } else {
           return res.userCtx.name;
         }

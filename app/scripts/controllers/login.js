@@ -8,7 +8,7 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('LoginCtrl', function($scope, remoteDB) {
+  .controller('LoginCtrl', function($scope, remoteDB, $window, $q) {
     $scope.createAcc = false;
 
     $scope.signup = function() {
@@ -38,15 +38,14 @@ angular.module('softwareEngineeringTeamApp')
       } else {
         $scope.createAcc = true;
       }
-   };
+    };
     $scope.login = function() {
-      remoteDB.login($scope.username, $scope.password, function(err, response) {
+      $q.when(remoteDB.login($scope.username, $scope.password).then( function(err) {
         if (err) {
-          if (err.name === 'unauthorized') {
-          } else {
-          }
+          if (err.name === 'unauthorized') {} else {}
         }
-      });
+      }));
+      $window.location.reload();
       $scope.username = "";
       $scope.password = "";
     };
