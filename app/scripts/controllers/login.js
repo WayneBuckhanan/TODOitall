@@ -9,6 +9,7 @@
  */
 angular.module('softwareEngineeringTeamApp')
   .controller('LoginCtrl', function($scope, remoteDB, $window, $q) {
+    var vm = this;
     $scope.createAcc = false;
 
     $scope.signup = function() {
@@ -16,7 +17,6 @@ angular.module('softwareEngineeringTeamApp')
         remoteDB.signup($scope.username, $scope.password, function(err, response) {
           if (err) {
             if (err.name === 'conflict') {
-              $scope.error = true;
               $scope.errMes = "This username already exists";
             } else if (err.name === 'forbidden') {
               $scope.errMes = "This username is not allowed";
@@ -42,11 +42,17 @@ angular.module('softwareEngineeringTeamApp')
     $scope.login = function() {
       $q.when(remoteDB.login($scope.username, $scope.password).then( function(err) {
         if (err) {
-          if (err.name === 'unauthorized') {} else {}
+          if (err.name === 'unauthorized') {
+            //console.log(err);
+            console.log(vm.loginForm.username);
+            vm.loginForm.username.$setValidity("incorrectLogin",false);
+            $scope.error = "incorrectLogin";
+          } else {
+            $window.location.reload();
+            $scope.username = "";
+            $scope.password = "";
+          }
         }
       }));
-      $window.location.reload();
-      $scope.username = "";
-      $scope.password = "";
     };
   });

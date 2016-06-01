@@ -4,14 +4,15 @@
     <form name="loginForm" layout="column">
       <md-input-container>
         <label>Username</label>
-        <input type="text"  ng-model="username" name="name" placeholder="Enter username" maxlength="10" minlength="5" required/>
+        <input type="text" ng-model="username" name="name" placeholder="Enter username" maxlength="10" minlength="5" required/>
         <div ng-messages="loginForm.name.$error" ng-show="loginForm.name.$touched">
           <div ng-message="required">This field is required</div>
           <div ng-message="minlength">Username must be at least 5 characters long</div>
-          <div ng-messages-exp="$scope.error">
-            {{$scope.errMes}}
-          </div>
+          <div ng-message="incorrectLogin">Your Username or Password is incorrect</div>
         </div>
+        <!-- <div ng-messages="error" ng-show="loginForm.name.$touched">
+          <div ng-message="incorrectLogin">Your Username or Password is incorrect</div>
+        </div> -->
       </md-input-container>
 
       <md-input-container>
