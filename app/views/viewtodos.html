@@ -7,9 +7,9 @@
         	<md-select ng-model="filterPriority">
         		<md-option value="">All</md-option>
 				<md-option value="High">High</md-option>
-    			<md-option value="Medium">Medium</md-option>    
-    			<md-option value="Low">Low</md-option>                         	
-    		</md-select>                            
+    			<md-option value="Medium">Medium</md-option>
+    			<md-option value="Low">Low</md-option>
+    		</md-select>
         </md-input-container>
 
         <md-card ng-repeat="todo in todos | filter: filterPriorityFunction">
@@ -27,7 +27,8 @@
             <md-card-content>
                 <div ng-show="open">
                     <div ng-show="details">
-                        <p>Priority: {{priorities[todo._id]}}</p>
+                        <p>Check {{todo}}</p>
+                        <p>Priority: {{todo.tPriority}}</p>
                         <p>Mission: {{todo.mission}}</p>
                         <p>Income: {{todo.income}}</p>
                         <p>Effort: {{todo.effort}}</p>

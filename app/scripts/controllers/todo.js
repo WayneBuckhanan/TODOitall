@@ -8,7 +8,7 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, $filter, pDB, remoteDB) {
+  .controller('ToDoCtrl', function($scope, $filter, pDB, remoteDB, $q) {
     $scope.todos = [];
     $scope.missions = [];
     $scope.incomes = [];
@@ -148,7 +148,7 @@ angular.module('softwareEngineeringTeamApp')
         _id: Math.uuid,
         text: $scope.todoText,
         done: false,
-        priority: $scope.todoPriority,
+        tPriority: $scope.todoPriority,
         mission: $scope.todoMission,
         income: $scope.todoIncome,
         effort: $scope.todoEffort,
@@ -158,15 +158,14 @@ angular.module('softwareEngineeringTeamApp')
       };
       console.log($scope.todoPriority);
       console.log(newTodo);
-      $scope.todos.push(newTodo);
 
-      pDB.post(newTodo, function(err, res) {
+      $q.when(pDB.post(newTodo, function(err, res) {
         if (err) {
           console.log(err);
         }
         newTodo._id = res.id;
         newTodo._rev = res.rev;
-      });
+      }));
 
       $scope.setValues(newTodo);
 
