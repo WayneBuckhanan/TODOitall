@@ -2,14 +2,14 @@
   <column name="Task" width="200" flex-grow="2">
     {{$row.text}}
   </column>
-  <column name="value" width="200" flex-grow="2">
-  <md-input-container>
-		<input type="number" ng-model="$row.value" min="0" max="7" style="width: 6em" ng-blur="submit($row)" placeholder="Value (0-7)">
-	</md-input-container>
-  </column>
-  <column name="effort" width="200" flex-grow="2">
+  <column name="Effort" width="200" flex-grow="2">
   <md-input-container>
 		<input type="number" ng-model="$row.effort" min="0" max="7" style="width: 6em" ng-blur="submit($row)" placeholder="Effort (0-7)">
 	</md-input-container>
-  </column>  
+  </column> 
+  <column name="Value" width="200" flex-grow="2">
+  <md-input-container>
+		<input type="number" ng-model="$row.value" min="0" max="7" style="width: 6em" ng-blur="submit($row)" placeholder="Value (0-7)">
+	</md-input-container>
+  </column> 
 </dtable>

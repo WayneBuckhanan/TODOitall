@@ -14,14 +14,55 @@ angular.module('softwareEngineeringTeamApp')
     
     $scope.todos = [];
     $scope.missions = [];
+    $scope.incomes = [];
+    $scope.values = [];
     $scope.efforts = [];
+    $scope.challenges = [];
+    $scope.abilities = [];
+    $scope.priorities = [];
     
+    $scope.resetValues = function(){
+    	$scope.todoText = null;
+    	$scope.todoPriority = 'Low';
+    	$scope.todoMission = 'optional';
+    	$scope.todoIncome = 'conserving';
+    	$scope.todoEffort = null;
+    	$scope.todoValue = null;
+   		$scope.todoChallenge = null;
+    	$scope.todoAbility = null;
+    }
+    
+    $scope.setValues = function(document){
+    	var todo = document;
+        $scope.missions[todo._id] = todo.mission;
+        $scope.incomes[todo._id] = todo.income;
+        $scope.values[todo._id] = todo.value;
+        $scope.efforts[todo._id] = todo.effort;
+        $scope.challenges[todo._id] = todo.challenge;
+        $scope.abilities[todo._id] = todo.ability;
+        $scope.priorities[todo._id] = todo.priority;
+    }
+    
+    $scope.checkValues = function(){
+    	$scope.todoEffort = ($scope.todoEffort == null) ? 0 : $scope.todoEffort;
+    	$scope.todoValue = ($scope.todoValue == null) ? 0 : $scope.todoValue;
+    	$scope.todoChallenge = ($scope.todoChallenge == null) ? 0 : $scope.todoChallenge;
+    	$scope.todoAbility = ($scope.todoAbility == null) ? 0 : $scope.todoAbility;
+    }
     
     $scope.missionOptions = {
   	  scrollbarV: false
     };
     
+    $scope.incomeOptions = {
+  	  scrollbarV: false
+    };
+    
     $scope.effortOptions = {
+  	  scrollbarV: false
+    };
+    
+    $scope.abilityOptions = {
   	  scrollbarV: false
     };
     
@@ -33,10 +74,18 @@ angular.module('softwareEngineeringTeamApp')
     	$scope.missions[todo._id] = mission;
     	pDB.put(todo);
     	
-    	console.log(todo);
+	};
+	
+	$scope.changeIncome = function (todo, income) {
+    	
+    	todo.income = income;
+    	$scope.incomes[todo._id] = income;
+    	pDB.put(todo);
+    	
 	};
 	
 	$scope.submit = function(todo) {
+
       pDB.put(todo);
     };
 	
@@ -53,8 +102,7 @@ angular.module('softwareEngineeringTeamApp')
           $scope.missions = [];
           response.rows.forEach(function(row) {
             $scope.todos.push(row.doc);
-            var todo = row.doc;
-          	$scope.missions[todo._id] = todo.mission;
+            $scope.setValues(row.doc);
           });
         });
       });
@@ -78,9 +126,7 @@ angular.module('softwareEngineeringTeamApp')
         $scope.efforts = [];
         response.rows.forEach(function(row) {
           $scope.todos.push(row.doc);
-          var todo = row.doc;
-          $scope.missions[todo._id] = todo.mission;
-          $scope.efforts[todo._id] = todo.effort;
+          $scope.setValues(row.doc);
         });
       });
     });
@@ -89,26 +135,30 @@ angular.module('softwareEngineeringTeamApp')
                            {value:'High'},
                            {value:'Medium'},
                            {value:'Low'}];
+                           
     $scope.todoPriority = '';
     //Prioty used for filtering :TODO need to change the name
     $scope.filterPriority = '';
 
     $scope.addTodo = function() {
-    
-    	if($scope.todoPriority == ''){
-        	$scope.todoPriority = 'Low'
-        }
+        
+      $scope.checkValues();
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
         done: false,
         priority: $scope.todoPriority,
-        mission: "none",
-        effort: 0,
-        value: 0
+        mission: $scope.todoMission,
+        income: $scope.todoIncome,
+        effort: $scope.todoEffort,
+        value: $scope.todoValue,
+        challenge: $scope.todoChallenge,
+        ability: $scope.todoAbility
       };
+      console.log($scope.todoPriority);
+      console.log(newTodo);
       $scope.todos.push(newTodo);
-      $scope.todoText = '';
+
       pDB.post(newTodo, function(err, res) {
         if (err) {
           console.log(err);
@@ -116,13 +166,21 @@ angular.module('softwareEngineeringTeamApp')
         newTodo._id = res.id;
         newTodo._rev = res.rev;
       });
-      $scope.todoPriority = ''
-      $scope.missions[newTodo._id] = newTodo.mission;
-      $scope.efforts[newTodo._id] = newTodo.effort;
+
+      $scope.setValues(newTodo);
+      
+      $scope.resetValues();
     };
     
     $scope.remove = function(todo){
    		 pDB.remove(todo);
+    };
+    
+    $scope.removeAll = function() {
+      angular.forEach($scope.todos, function(todo) {
+          pDB.remove(todo);
+      });
+      $scope.todos = [];
     };
     
     $scope.removeDone = function() {
@@ -150,6 +208,15 @@ angular.module('softwareEngineeringTeamApp')
       });
       return count;
     };
+    
+    $scope.filterPriorityFunction = function(todo) {
+    	if ($scope.filterPriority === ''){
+    		return true;
+    	}
+    	else{
+    		return $scope.priorities[todo._id] === $scope.filterPriority ? true : false;
+  		}
+	};
 
   })
   
