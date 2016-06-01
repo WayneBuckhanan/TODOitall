@@ -12,11 +12,11 @@ angular
   .module('softwareEngineeringTeamApp', [
     'ngAnimate',
     'ngRoute',
-    'pouchdb',
     'ngMaterial',
-    'data-table' 
+    'data-table',
+    'ngMessages'
   ])
-  .config(function ($routeProvider, $mdThemingProvider) {
+  .config(function($routeProvider, $mdThemingProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -41,14 +41,18 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-      
-      
-      $mdThemingProvider.theme('altTheme').primaryPalette('green',{'default': '900'}).accentPalette('yellow',{'default': '900'}).warnPalette('red',{'default': '900'});
+
+
+    $mdThemingProvider.theme('altTheme').primaryPalette('green', {
+      'default': '900'
+    }).accentPalette('yellow', {
+      'default': '900'
+    }).warnPalette('red', {
+      'default': '900'
+    });
   })
-   .controller('SideNav', function($scope, $mdSidenav) {
-  $scope.openLeftMenu = function() {
-    $mdSidenav('left').toggle();
-  };
-  
-  
-});
+  .controller('SideNav', function($scope, $mdSidenav) {
+    $scope.openLeftMenu = function() {
+      $mdSidenav('left').toggle();
+    };
+  });

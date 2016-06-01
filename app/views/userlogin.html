@@ -1,0 +1,17 @@
+<div layout="row" ng-init="getSession()">
+  <md-button ng-click="loginDialog($event)" ng-show="loginState === 'loginEmpty'">
+    Login
+  </md-button>
+  <md-menu>
+    <md-button aria-label="Loggedinuser" ng-click="$mdOpenMenu()" ng-show="loginState !== 'loginEmpty'">
+      {{loginState}}
+    </md-button>
+    <md-menu-content>
+      <md-menu-item>
+      <md-button aria-label="logoutButton" ng-click="logout()">
+        logout
+      </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+</div>

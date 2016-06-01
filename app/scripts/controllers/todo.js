@@ -8,10 +8,7 @@
  * Controller of the softwareEngineeringTeamApp
  */
 angular.module('softwareEngineeringTeamApp')
-  .controller('ToDoCtrl', function($scope, $filter, pDB, pouchDB) {
-  
-    var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo');
-    
+  .controller('ToDoCtrl', function($scope, $filter, pDB, remoteDB) {
     $scope.todos = [];
     $scope.missions = [];
     $scope.incomes = [];
@@ -20,75 +17,76 @@ angular.module('softwareEngineeringTeamApp')
     $scope.challenges = [];
     $scope.abilities = [];
     $scope.priorities = [];
-    
-    $scope.resetValues = function(){
-    	$scope.todoText = null;
-    	$scope.todoPriority = 'Low';
-    	$scope.todoMission = 'optional';
-    	$scope.todoIncome = 'conserving';
-    	$scope.todoEffort = null;
-    	$scope.todoValue = null;
-   		$scope.todoChallenge = null;
-    	$scope.todoAbility = null;
-    }
-    
-    $scope.setValues = function(document){
-    	var todo = document;
-        $scope.missions[todo._id] = todo.mission;
-        $scope.incomes[todo._id] = todo.income;
-        $scope.values[todo._id] = todo.value;
-        $scope.efforts[todo._id] = todo.effort;
-        $scope.challenges[todo._id] = todo.challenge;
-        $scope.abilities[todo._id] = todo.ability;
-        $scope.priorities[todo._id] = todo.priority;
-    }
-    
-    $scope.checkValues = function(){
-    	$scope.todoEffort = ($scope.todoEffort == null) ? 0 : $scope.todoEffort;
-    	$scope.todoValue = ($scope.todoValue == null) ? 0 : $scope.todoValue;
-    	$scope.todoChallenge = ($scope.todoChallenge == null) ? 0 : $scope.todoChallenge;
-    	$scope.todoAbility = ($scope.todoAbility == null) ? 0 : $scope.todoAbility;
-    }
-    
-    $scope.missionOptions = {
-  	  scrollbarV: false
-    };
-    
-    $scope.incomeOptions = {
-  	  scrollbarV: false
-    };
-    
-    $scope.effortOptions = {
-  	  scrollbarV: false
-    };
-    
-    $scope.abilityOptions = {
-  	  scrollbarV: false
-    };
-    
-    $scope.selected = {value: 0};
-    
-    $scope.changeMission = function (todo, mission) {
-    	
-    	todo.mission = mission;
-    	$scope.missions[todo._id] = mission;
-    	pDB.put(todo);
-    	
-	};
-	
-	$scope.changeIncome = function (todo, income) {
-    	
-    	todo.income = income;
-    	$scope.incomes[todo._id] = income;
-    	pDB.put(todo);
-    	
-	};
-	
-	$scope.submit = function(todo) {
 
+    $scope.resetValues = function() {
+      $scope.todoText = null;
+      $scope.todoPriority = 'Low';
+      $scope.todoMission = 'optional';
+      $scope.todoIncome = 'conserving';
+      $scope.todoEffort = null;
+      $scope.todoValue = null;
+      $scope.todoChallenge = null;
+      $scope.todoAbility = null;
+    }
+
+    $scope.setValues = function(document) {
+      var todo = document;
+      $scope.missions[todo._id] = todo.mission;
+      $scope.incomes[todo._id] = todo.income;
+      $scope.values[todo._id] = todo.value;
+      $scope.efforts[todo._id] = todo.effort;
+      $scope.challenges[todo._id] = todo.challenge;
+      $scope.abilities[todo._id] = todo.ability;
+      $scope.priorities[todo._id] = todo.priority;
+    }
+
+    $scope.checkValues = function() {
+      $scope.todoEffort = ($scope.todoEffort == null) ? 0 : $scope.todoEffort;
+      $scope.todoValue = ($scope.todoValue == null) ? 0 : $scope.todoValue;
+      $scope.todoChallenge = ($scope.todoChallenge == null) ? 0 : $scope.todoChallenge;
+      $scope.todoAbility = ($scope.todoAbility == null) ? 0 : $scope.todoAbility;
+    }
+
+    $scope.missionOptions = {
+      scrollbarV: false
+    };
+
+    $scope.incomeOptions = {
+      scrollbarV: false
+    };
+
+    $scope.effortOptions = {
+      scrollbarV: false
+    };
+
+    $scope.abilityOptions = {
+      scrollbarV: false
+    };
+
+    $scope.selected = {
+      value: 0
+    };
+
+    $scope.changeMission = function(todo, mission) {
+
+      todo.mission = mission;
+      $scope.missions[todo._id] = mission;
+      pDB.put(todo);
+
+    };
+
+    $scope.changeIncome = function(todo, income) {
+
+      todo.income = income;
+      $scope.incomes[todo._id] = income;
+      pDB.put(todo);
+
+    };
+
+    $scope.submit = function(todo) {
       pDB.put(todo);
     };
-	
+
     pDB.sync(remoteDB, {
       live: true,
       retry: true
@@ -131,18 +129,21 @@ angular.module('softwareEngineeringTeamApp')
       });
     });
 
-    $scope.priorityOptions = [
-                           {value:'High'},
-                           {value:'Medium'},
-                           {value:'Low'}];
-                           
+    $scope.priorityOptions = [{
+      value: 'High'
+    }, {
+      value: 'Medium'
+    }, {
+      value: 'Low'
+    }];
+
     $scope.todoPriority = '';
     //Prioty used for filtering :TODO need to change the name
     $scope.filterPriority = '';
 
     $scope.addTodo = function() {
-        
       $scope.checkValues();
+
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
@@ -168,21 +169,21 @@ angular.module('softwareEngineeringTeamApp')
       });
 
       $scope.setValues(newTodo);
-      
+
       $scope.resetValues();
     };
-    
-    $scope.remove = function(todo){
-   		 pDB.remove(todo);
+
+    $scope.remove = function(todo) {
+      pDB.remove(todo);
     };
-    
+
     $scope.removeAll = function() {
       angular.forEach($scope.todos, function(todo) {
-          pDB.remove(todo);
+        pDB.remove(todo);
       });
       $scope.todos = [];
     };
-    
+
     $scope.removeDone = function() {
       var oldTodos = $scope.todos;
       $scope.todos = [];
@@ -196,7 +197,7 @@ angular.module('softwareEngineeringTeamApp')
     };
 
     $scope.updateTodo = function(todo) {
-      
+
       todo.done ? todo.done = false : todo.done = true;
       pDB.put(todo);
     };
@@ -208,15 +209,13 @@ angular.module('softwareEngineeringTeamApp')
       });
       return count;
     };
-    
+
     $scope.filterPriorityFunction = function(todo) {
-    	if ($scope.filterPriority === ''){
-    		return true;
-    	}
-    	else{
-    		return $scope.priorities[todo._id] === $scope.filterPriority ? true : false;
-  		}
-	};
+      if ($scope.filterPriority === '') {
+        return true;
+      } else {
+        return $scope.priorities[todo._id] === $scope.filterPriority ? true : false;
+      }
+    };
 
   })
-  
