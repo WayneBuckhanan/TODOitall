@@ -28,8 +28,9 @@ module.exports = function(config) {
       'bower_components/angular-material/angular-material.js',
       'bower_components/angular-data-table/release/dataTable.helpers.js',
       'bower_components/angular-data-table/release/dataTable.js',
-      'bower_components/pouchdb/dist/pouchdb.js',
+      'bower_components/pouchdb/dist/pouchdb.min.js',
       'bower_components/pouchdb-authentication/dist/pouchdb.authentication.js',
+      'bower_components/angular-pouchdb/angular-pouchdb.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

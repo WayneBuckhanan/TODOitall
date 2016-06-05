@@ -14,7 +14,8 @@ angular
     'ngRoute',
     'ngMaterial',
     'data-table',
-    'ngMessages'
+    'ngMessages',
+    'pouchdb'
   ])
   .config(function($routeProvider, $mdThemingProvider) {
     $routeProvider
