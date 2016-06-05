@@ -27,7 +27,7 @@ angular.module('softwareEngineeringTeamApp')
       $scope.todoValue = null;
       $scope.todoChallenge = null;
       $scope.todoAbility = null;
-    }
+    };
 
     $scope.setValues = function(document) {
       var todo = document;
@@ -38,14 +38,14 @@ angular.module('softwareEngineeringTeamApp')
       $scope.challenges[todo._id] = todo.challenge;
       $scope.abilities[todo._id] = todo.ability;
       $scope.priorities[todo._id] = todo.priority;
-    }
+    };
 
     $scope.checkValues = function() {
-      $scope.todoEffort = ($scope.todoEffort == null) ? 0 : $scope.todoEffort;
-      $scope.todoValue = ($scope.todoValue == null) ? 0 : $scope.todoValue;
-      $scope.todoChallenge = ($scope.todoChallenge == null) ? 0 : $scope.todoChallenge;
-      $scope.todoAbility = ($scope.todoAbility == null) ? 0 : $scope.todoAbility;
-    }
+      $scope.todoEffort = ($scope.todoEffort === null) ? 0 : $scope.todoEffort;
+      $scope.todoValue = ($scope.todoValue === null) ? 0 : $scope.todoValue;
+      $scope.todoChallenge = ($scope.todoChallenge === null) ? 0 : $scope.todoChallenge;
+      $scope.todoAbility = ($scope.todoAbility === null) ? 0 : $scope.todoAbility;
+    };
 
     $scope.missionOptions = {
       scrollbarV: false
@@ -217,4 +217,4 @@ angular.module('softwareEngineeringTeamApp')
       }
     };
 
-  })
+  });

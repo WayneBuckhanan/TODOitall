@@ -14,7 +14,7 @@ angular.module('softwareEngineeringTeamApp')
 
     $scope.signup = function() {
       if ($scope.createAcc === true) {
-        remoteDB.signup($scope.username, $scope.password, function(err, response) {
+        remoteDB.signup($scope.username, $scope.password, function(err) {
           if (err) {
             if (err.name === 'conflict') {
               $scope.errMes = "This username already exists";
