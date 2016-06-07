@@ -17,6 +17,8 @@ angular.module('softwareEngineeringTeamApp')
     $scope.challenges = [];
     $scope.abilities = [];
     $scope.priorities = [];
+    $scope.todoPriority = '';
+    $scope.filterPriority = '';
 
     $scope.resetValues = function() {
       $scope.todoText = null;
@@ -87,11 +89,8 @@ angular.module('softwareEngineeringTeamApp')
       pDB.put(todo);
     };
 
-    pDB.sync(remoteDB, {
-      live: true,
-      retry: true
-    }).on('change', function(info) {
-      console.log(info);
+    $scope.updateDisplay = function() {
+      //update display from local database
       pDB.allDocs({
         include_docs: true
       }, function(err, response) {
@@ -104,29 +103,28 @@ angular.module('softwareEngineeringTeamApp')
           });
         });
       });
+    }
+
+    //Update the display when page is opened
+    $scope.updateDisplay();
+
+    pDB.sync(remoteDB, {
+      live: true,
+      retry: true
+    }).on('change', function(info) {
+      console.log(info);
+      //update display when local or remote database changes
+      $scope.updateDisplay();
     }).on('paused', function(info) {
       console.log(info);
     }).on('active', function(info) {
       console.log(info);
+      //Update display when database becomes active
+      $scope.updateDisplay();
     }).on('complete', function(info) {
       console.log(info);
     }).on('error', function(err) {
       console.log(err);
-    });
-
-
-    pDB.allDocs({
-      include_docs: true
-    }, function(err, response) {
-      $scope.$apply(function() {
-        $scope.todos = [];
-        $scope.missions = [];
-        $scope.efforts = [];
-        response.rows.forEach(function(row) {
-          $scope.todos.push(row.doc);
-          $scope.setValues(row.doc);
-        });
-      });
     });
 
     $scope.priorityOptions = [{
@@ -137,13 +135,10 @@ angular.module('softwareEngineeringTeamApp')
       value: 'Low'
     }];
 
-    $scope.todoPriority = '';
-    //Prioty used for filtering :TODO need to change the name
-    $scope.filterPriority = '';
-
     $scope.addTodo = function() {
       $scope.checkValues();
 
+      //create todo
       var newTodo = {
         _id: Math.uuid,
         text: $scope.todoText,
@@ -159,6 +154,7 @@ angular.module('softwareEngineeringTeamApp')
       console.log($scope.todoPriority);
       console.log(newTodo);
 
+      //push todo into local database
       $q.when(pDB.post(newTodo, function(err, res) {
         if (err) {
           console.log(err);
@@ -168,7 +164,6 @@ angular.module('softwareEngineeringTeamApp')
       }));
 
       $scope.setValues(newTodo);
-
       $scope.resetValues();
     };
 
