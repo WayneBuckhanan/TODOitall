@@ -43,12 +43,11 @@ angular
       });
       
       
-      $mdThemingProvider.theme('altTheme').primaryPalette('green',{'default': '900'}).accentPalette('yellow',{'default': '900'}).warnPalette('red',{'default': '900'});
+    $mdThemingProvider.theme('altTheme').primaryPalette('green',{'default': '900'}).accentPalette('yellow',{'default': '900'}).warnPalette('red',{'default': '900'});
   })
-   .controller('SideNav', function($scope, $mdSidenav) {
-  $scope.openLeftMenu = function() {
-    $mdSidenav('left').toggle();
-  };
+  .controller('SideNav', function($scope, $mdSidenav) {
   
-  
-});
+	  $scope.openLeftMenu = function() {
+		$mdSidenav('left').toggle();
+	  };
+	});
