@@ -1,10 +1,5 @@
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
-Session.vim
-.netrwhist
-*~
-
-platforms
-plugins
-_*
+/node_modules
+/.tmp
+/.sass-cache
+/bower_components
+/dist/*

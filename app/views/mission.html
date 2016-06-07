@@ -1,0 +1,32 @@
+<dtable options="missionOptions" rows="todos" class="material dt">
+  <column name="Text">
+    {{$row.text}}
+  </column>
+  <column name="Critical" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'Critical')">
+    <md-radio-button aria-label="Mission Critical"  class="md-primary" value="Critical"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Incidental" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'Incidental')">
+    <md-radio-button  aria-label="Mission Incidental" class="md-accent" value="Incidental"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Optional" width="100">
+    <div md-theme="altTheme" layout="row" layout-align="center center">
+    <md-radio-group ng-model="missions[$row._id]" ng-change="changeMission($row, 'Optional')">
+    <md-radio-button  aria-label="Mission Optional" class="md-warn" value="Optional"></md-radio-button>
+    </md-radio-group>
+    </div>
+  </column>
+  <column name="Mission">
+  {{missions[$row._id]}}
+  </column>
+  <column name="Priority">
+  {{$row.priorityy}}
+  </column>
+</dtable>

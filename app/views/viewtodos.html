@@ -1,0 +1,88 @@
+ <span>{{remaining()}} of {{todos.length}} remaining</span>
+        <md-button class="button" ng-click="removeDone()">Remove done</md-button>
+        <md-button class="button" ng-click="removeAll()">Remove all</md-button>
+
+        <!--Filter box-->
+        <md-input-container>
+        	<md-select ng-model="filterPriority">
+        		<md-option value="">All</md-option>
+				<md-option value="High">High</md-option>
+    			<md-option value="Medium">Medium</md-option>
+    			<md-option value="Low">Low</md-option>
+    		</md-select>
+        </md-input-container>
+
+        <md-card ng-repeat="todo in todos | filter: filterPriorityFunction">
+            <md-card-title>
+                <md-checkbox class="md-headline" aria-label="Checkbox 1" ng-model="todo.done" ng-click="updateTodo(todo)">{{todo.text}}</md-checkbox>
+            </md-card-title>
+            <div ng-switch="open == true" ng-click="open = !open; details = !details" layout="row" layout-align="end center">
+                <div ng-switch-when=true>
+                    <img layout-align="right" src="../imgs/chevron_up.png" style="width:44px;height:44px;">
+                </div>
+                <div ng-switch-when=false>
+                    <img layout-align="right" src="../imgs/chevron_down.png" style="width:44px;height:44px;">
+                </div>
+            </div>
+            <md-card-content>
+                <div ng-show="open">
+                    <div ng-show="details">
+                        <p>Priority: {{todo.priorityy}}</p>
+                        <p>Mission: {{todo.mission}}</p>
+                        <p>Income: {{todo.income}}</p>
+                        <p>Effort: {{todo.effort}}</p>
+                        <p>Value: {{todo.value}}</p>
+                        <p>Ability: {{todo.ability}}</p>
+                        <p>Challenge: {{todo.challenge}}</p>
+                    </div>
+                    <form layout="column" ng-show="edit">
+                        <md-input-container>
+                            <input type="text" aria-label="name" ng-model="cachedTodo.text" size="30">
+                        </md-input-container>
+                        <div layout-gt-sm="row">
+                            <md-input-container>
+                            	<p>Mission:</p>
+								<md-select ng-model="cachedTodo.mission">
+									<md-option value="Critical">Critical</md-option>
+    								<md-option value="Incidental">Incidental</md-option>
+    								<md-option value="Optional">Optional</md-option>
+    							</md-select>
+                           	</md-input-container>
+                            <md-input-container>
+                            	<p>Income:</p>
+								<md-select ng-model="cachedTodo.income">
+									<md-option value="Generating">Generating</md-option>
+    								<md-option value="Consuming">Consuming</md-option>
+    								<md-option value="Conserving">Conserving</md-option>
+    							</md-select>
+                           	</md-input-container>
+                            </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container>
+                                <input type="number" min="0" max="7" style="width: 10em" ng-model="cachedTodo.effort" placeholder="Effort (0-7)">
+                            </md-input-container>
+                            <md-input-container>
+                                <input type="number" min="0" max="7"  style="width: 10em" ng-model="cachedTodo.value" placeholder="Value (0-7)">
+                            </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                            <md-input-container>
+                                <input type="number" min="0" max="12"  style="width: 10em" ng-model="cachedTodo.ability" placeholder="Ability (0-12)">
+                            </md-input-container>
+                            <md-input-container>
+                                <input type="number" min="0" max="12" style="width: 10em" ng-model="cachedTodo.challenge" placeholder="Challenge (0-12)">
+                            </md-input-container>
+                            </div>
+                    </form>
+
+
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <div ng-show="open">
+                    <md-button ng-show="edit" ng-click="save(todo, cachedTodo); edit = !edit; open = !open">Save</md-button>
+                    <md-button ng-click="edit = !edit; cache(edit, todo); details = !details">{{editButton}}</md-button>
+                    <md-button ng-click="remove(todo)">Delete</md-button>
+                </div>
+            </md-card-actions>
+            </div>
+        </md-card>
