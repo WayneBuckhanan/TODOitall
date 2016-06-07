@@ -14,19 +14,27 @@ angular.module('softwareEngineeringTeamApp')
 
     $scope.signup = function() {
       if ($scope.createAcc === true) {
+        //Check if signup view is active
+        //if so run singup and create new user
+        //Error control code not finished
         remoteDB.signup($scope.username, $scope.password, function(err) {
           if (err) {
             if (err.name === 'conflict') {
+              //User already exists
             } else if (err.name === 'forbidden') {
+              //Username not or passoword
             } else if ($scope.password !== $scope.passwordCheck) {
+              //check if both passwords enter match
             } else {
 
             }
           } else {
+            //Set signup view to active
             $scope.createAcc = true;
           }
         });
 
+        //set values after login to defualt
         $scope.createAcc = false;
         $scope.username = '';
         $scope.password = '';
@@ -36,12 +44,12 @@ angular.module('softwareEngineeringTeamApp')
       }
     };
     $scope.login = function() {
-      $q.when(remoteDB.login($scope.username, $scope.password).then( function(err) {
+      $q.when(remoteDB.login($scope.username, $scope.password).then(function(err) {
         if (err) {
           if (err.name === 'unauthorized') {
-            //console.log(err);
+            //code here wast ment for error control but was not finsished
             console.log(vm.loginForm.username);
-            vm.loginForm.username.$setValidity("incorrectLogin",false);
+            vm.loginForm.username.$setValidity("incorrectLogin", false);
             $scope.error = "incorrectLogin";
           } else {
             $window.location.reload();

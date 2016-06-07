@@ -11,6 +11,7 @@ angular.module('softwareEngineeringTeamApp')
   .factory('remoteDB', function(pouchDB) {
 
     var remoteDB = pouchDB('http://todoitall.mercs.net:5984/todo', {
+      //Setup reference to remote database
       skipSetup: true
     });
 
