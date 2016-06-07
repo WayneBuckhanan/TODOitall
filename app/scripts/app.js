@@ -43,7 +43,6 @@ angular
         redirectTo: '/'
       });
 
-
     $mdThemingProvider.theme('altTheme').primaryPalette('green', {
       'default': '900'
     }).accentPalette('yellow', {
@@ -53,6 +52,7 @@ angular
     });
   })
   .controller('SideNav', function($scope, $mdSidenav) {
+
     $scope.openLeftMenu = function() {
       $mdSidenav('left').toggle();
     };
